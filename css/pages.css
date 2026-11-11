@@ -1,0 +1,2386 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Poppins:wght@700&display=swap');
+/* Page-specific styles */
+
+/* Login (layout and look from the Final_Project_G1 login page). Every class is prefixed lg- so nothing here leaks into the app. */
+.lg-shell {
+  --lg-navy: #102947;
+  --lg-gold: #c79e41;
+  --lg-warm: #fff;
+  --lg-ink: #182538;
+  --lg-muted: #657084;
+  --lg-line: #bcc6d2;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  background: var(--lg-warm);
+  color: var(--lg-ink);
+  font-family: var(--font);
+}
+
+/* Brief confirmation before the dashboard renders. It is intentionally
+   short and runs only after credentials have been accepted. */
+.lg-shell.is-signing-in .lg-form-panel {
+  animation: login-success-exit 180ms ease-out both;
+}
+.lg-shell.is-signing-in .lg-submit {
+  background: var(--nu-gold, #e6b839);
+}
+@keyframes login-success-exit {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: .92; transform: translateY(-4px); }
+}
+.lg-brand-panel {
+  background: url('../assets/g1-nufv-ver2.png') left center / cover no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+.lg-brand-panel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: clamp(40px, 5vw, 90px);
+  background: linear-gradient(to right, transparent, var(--lg-warm));
+  pointer-events: none;
+}
+.lg-form-panel {
+  align-self: center;
+  justify-self: center;
+  width: min(100%, 500px);
+  padding: 40px clamp(24px, 3vw, 48px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.lg-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: -8px 0 22px;
+}
+.lg-brand-mark {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+}
+.lg-brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.23));
+}
+.lg-brand-rule {
+  width: 1px;
+  height: 78px;
+  background: #253a56;
+}
+.lg-brand-name {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  line-height: 0.92;
+  color: var(--lg-navy);
+}
+.lg-heading {
+  text-align: center;
+  margin: 14px 0 28px;
+}
+.lg-heading h1 {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font);
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: -.55px;
+  line-height: 1.25;
+  color: var(--lg-navy);
+}
+.lg-heading h1:focus {
+  outline: none;
+}
+.lg-label {
+  display: block;
+  color: #24364e;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+.lg-select-wrap,
+.lg-input-wrap {
+  position: relative;
+  margin-bottom: 18px;
+}
+.lg-select-wrap > svg,
+.lg-input-wrap > svg {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #5d7088;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.lg-shell select,
+.lg-shell input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 48px;
+  border: 1px solid var(--lg-line);
+  border-radius: 7px;
+  background: #fff;
+  color: #26354a;
+  font: inherit;
+  font-size: 16px;
+  outline: none;
+  transition:
+    border 0.2s,
+    box-shadow 0.2s;
+}
+/* The real <select> stays for the form value but is hidden; the visible control is the trigger + list below. */
+.lg-shell .lg-select-wrap select {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.lg-select-trigger {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px 0 42px;
+  border: 1px solid var(--lg-line);
+  border-radius: 7px;
+  background: #fff;
+  color: #26354a;
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+}
+.lg-select-trigger:hover {
+  border-color: #9daaba;
+  background: #fbfcfe;
+}
+.lg-select-trigger:focus-visible,
+.lg-select-trigger[aria-expanded='true'] {
+  border-color: #315f91;
+  box-shadow: 0 0 0 3px rgba(49, 95, 145, 0.14);
+  outline: none;
+}
+.lg-select-chevron {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: #657084;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: 0 0 auto;
+  transition: transform 0.2s ease;
+}
+.lg-select-trigger[aria-expanded='true'] .lg-select-chevron {
+  transform: rotate(180deg);
+}
+.lg-campus-menu {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% - 10px);
+  left: 0;
+  right: 0;
+  max-height: min(280px, 42vh);
+  overflow-y: auto;
+  padding: 7px;
+  border: 1px solid #b7c7d8;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 16px 34px rgba(16, 41, 71, 0.2), 0 3px 8px rgba(16, 41, 71, 0.08);
+  scrollbar-width: thin;
+  scrollbar-color: #9aafc4 transparent;
+}
+.lg-campus-menu::-webkit-scrollbar { width: 8px; }
+.lg-campus-menu::-webkit-scrollbar-track { background: transparent; }
+.lg-campus-menu::-webkit-scrollbar-thumb { background: #9aafc4; border-radius: 99px; border: 2px solid #fff; }
+.lg-campus-menu button {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  color: #26354a;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+.lg-campus-menu button:hover,
+.lg-campus-menu button:focus-visible {
+  color: #102947;
+  background: #edf3f9;
+  outline: none;
+}
+.lg-campus-menu button[aria-selected='true'] {
+  color: #102947;
+  background: #e5eff8;
+  font-weight: 700;
+}
+.lg-campus-menu button[aria-selected='true']::after {
+  content: '\2713';
+  margin-left: auto;
+  color: #315f91;
+  font-weight: 800;
+}
+/* Use our own eye button, not Edge's duplicate native one. */
+.lg-shell input[type='password']::-ms-reveal,
+.lg-shell input[type='password']::-ms-clear {
+  display: none;
+}
+.lg-shell input {
+  padding: 0 44px;
+}
+.lg-shell input::placeholder {
+  color: #657084;
+  font-size: 14px;
+}
+.lg-shell select:hover,
+.lg-shell input:hover {
+  border-color: #aab4c0;
+}
+.lg-shell select:focus,
+.lg-shell input:focus {
+  border-color: #315f91;
+  box-shadow: 0 0 0 3px rgba(49, 95, 145, 0.14);
+}
+.lg-shell input[aria-invalid='true'] {
+  border-color: #a32626;
+}
+.lg-shell input:read-only {
+  cursor: wait;
+}
+.lg-pw-toggle {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #69778a;
+  padding: 0;
+}
+.lg-pw-toggle:hover {
+  color: var(--lg-navy);
+  background: #eef3f8;
+}
+.lg-pw-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lg-eye-closed {
+  display: none;
+}
+.lg-pw-toggle.is-visible .lg-eye-open {
+  display: none;
+}
+.lg-pw-toggle.is-visible .lg-eye-closed {
+  display: block;
+}
+.lg-error,
+.lg-caps {
+  margin: -10px 0 18px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.lg-error {
+  color: #a32626;
+}
+#email-error {
+  margin-top: 2px;
+}
+.lg-caps {
+  color: #73591f;
+}
+.lg-error[hidden],
+.lg-caps[hidden] {
+  display: none;
+}
+#password-error {
+  min-height: 18px;
+}
+#password-error[hidden] {
+  display: block;
+  visibility: hidden;
+}
+.lg-password-meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0 12px;
+}
+.lg-password-feedback {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.lg-password-feedback #password-error,
+.lg-password-feedback .lg-caps {
+  float: none;
+  width: auto;
+  margin: 0;
+  text-align: left;
+}
+.lg-password-feedback #password-error {
+  min-height: 18px;
+}
+.lg-password-feedback #password-error[hidden] {
+  display: block;
+  visibility: hidden;
+}
+.lg-password-meta .lg-forgot {
+  float: none;
+  flex: 0 0 auto;
+  width: auto;
+  margin: 0 0 0 auto;
+  padding: 0;
+  line-height: 18px;
+  position: static;
+}
+.lg-forgot {
+  display: block;
+  float: right;
+  width: 128px;
+  margin-left: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: #73591f;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 0;
+  margin-top: -10px;
+  margin-right: 0;
+  margin-bottom: 12px;
+  position: relative;
+  top: -7px;
+  text-align: right;
+}
+#password-error {
+  display: block;
+  float: left;
+  width: calc(100% - 136px);
+  box-sizing: border-box;
+  margin: -10px 0 12px;
+  text-align: left;
+}
+#password-error[hidden] {
+  display: block;
+}
+#login-form .lg-submit { clear: both; }
+@media (max-width: 360px) {
+  #password-error { width: calc(100% - 116px); }
+  .lg-forgot { width: 108px; font-size: 11px; }
+}
+.lg-forgot:hover {
+  color: #795f25;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.lg-message {
+  min-height: 18px;
+  color: #a92828;
+  font-size: 12px;
+  margin: -8px 0 8px;
+}
+.lg-message:empty {
+  min-height: 0;
+  margin: 0 0 8px;
+}
+.lg-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  background: #e0b33e;
+  color: var(--lg-navy);
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    background 0.15s;
+}
+.lg-submit:hover {
+  background: #d4a52e;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(129, 104, 49, 0.18);
+}
+.lg-submit:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
+  box-shadow: none;
+}
+.lg-submit[aria-busy]::before {
+  content: '';
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: lg-spin 0.8s linear infinite;
+}
+@keyframes lg-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.lg-ms {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  width: 100%;
+  height: 48px;
+  margin: 0 0 22px;
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  background: var(--lg-navy);
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    background 0.15s;
+}
+.lg-ms:hover {
+  background: #173b66;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 41, 71, 0.17);
+}
+.lg-ms:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
+  box-shadow: none;
+}
+.lg-ms[aria-busy]::before {
+  content: '';
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: lg-spin 0.8s linear infinite;
+}
+.lg-ms[aria-busy] .lg-ms-logo {
+  display: none;
+}
+.lg-ms-logo {
+  display: grid;
+  grid-template-columns: repeat(2, 8px);
+  grid-template-rows: repeat(2, 8px);
+  gap: 2px;
+}
+.lg-ms-logo i:nth-child(1) {
+  background: #f35325;
+}
+.lg-ms-logo i:nth-child(2) {
+  background: #81bc06;
+}
+.lg-ms-logo i:nth-child(3) {
+  background: #05a6f0;
+}
+.lg-ms-logo i:nth-child(4) {
+  background: #ffba08;
+}
+.lg-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 20px;
+  color: #536174;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.lg-divider span {
+  height: 1px;
+  flex: 1;
+  background: var(--lg-line);
+}
+.lg-divider p {
+  margin: 0;
+  white-space: nowrap;
+}
+.lg-mfa {
+  padding: 28px 24px 22px;
+  border: 1px solid #d6e0eb;
+  border-radius: 16px;
+  background: #f7f9fc;
+  text-align: center;
+}
+.lg-verification-badge { display: grid; place-items: center; width: 50px; height: 50px; margin: 0 auto 16px; border-radius: 14px; color: #315f91; background: #e5eff8; }
+.lg-verification-badge img { width: 36px; height: 36px; object-fit: contain; }
+.lg-verification-badge svg { width: 27px; height: 27px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.lg-verification-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.7px; margin: 0; color: #73591f; }
+.lg-account-chip { display: inline-block; max-width: 100%; overflow-wrap: anywhere; padding: 6px 11px; margin: 0 auto 22px; border: 1px solid #d6e3ef; border-radius: 999px; background: #fff; color: #315f91; font-size: 13px; font-weight: 700; }
+.lg-mfa-title {
+  margin: 14px 0 9px;
+  font-family: var(--font);
+  font-size: 25px;
+  letter-spacing: -.7px;
+  color: var(--lg-navy);
+}
+.lg-mfa-text {
+  margin: 0 auto 20px;
+  max-width: 335px;
+  line-height: 1.55;
+  color: #657084;
+  font-size: 14px;
+}
+.lg-mfa .lg-label { text-align: left; }
+.lg-mfa #mfa-code {
+  height: 58px;
+  letter-spacing: 10px;
+  font-size: 25px;
+  font-weight: 700;
+  text-align: center;
+  padding: 0;
+  line-height: 58px;
+  text-indent: 5px;
+  font-variant-numeric: tabular-nums;
+  color: #102947;
+  border-color: #91a9c1;
+}
+.lg-code-hint { color: #536174; font-size: 12px; line-height: 1.5; margin: 12px 0 18px; text-align: center; }
+.lg-mfa #mfa-code[inputmode='text'] { font-size: clamp(12px, 3vw, 14px); letter-spacing: .2px; text-align: center; padding: 0 8px; }
+.lg-mfa .lg-message { margin: 0 auto 12px; max-width: 340px; text-align: center; line-height: 1.5; }
+.lg-mfa-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin-top: 20px; }
+.lg-recovery, .lg-back { min-height: 44px; padding: 10px 12px; font: inherit; font-size: 13px; font-weight: 700; color: #244d7b; cursor: pointer; border-radius: 6px; }
+.lg-recovery { border: 1px solid #b7c9da; background: #fff; }
+.lg-back { border: 0; background: transparent; }
+.lg-recovery:hover, .lg-back:hover { background: #edf2f6; text-decoration: underline; text-underline-offset: 3px; }
+.lg-shell button:focus-visible,
+.lg-shell a:focus-visible {
+  outline: 3px solid #315f91;
+  outline-offset: 3px;
+}
+.lg-support-wrap {
+  margin-top: 20px;
+  color: #24415f;
+  text-align: center;
+}
+.lg-support-title {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.lg-support {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border: 1px solid #cbd1d8;
+  border-radius: 7px;
+  background: #f0f3f6;
+  color: #24415f;
+}
+.lg-support:hover {
+  border-color: #aeb9c5;
+  background: #edf0f4;
+  box-shadow: 0 4px 12px rgba(16, 41, 71, 0.08);
+}
+.lg-support-wrap:focus {
+  outline: none;
+}
+.lg-support.is-flash {
+  border-color: #315f91;
+  box-shadow: 0 0 0 3px rgba(49, 95, 145, 0.2);
+}
+.lg-support-icon {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.lg-support p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  text-align: center;
+}
+.lg-support strong {
+  display: block;
+  font-weight: 800;
+}
+.lg-support a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #244d7b;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 6px 0;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+.lg-support a:hover {
+  color: #102947;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transform: translateY(-1px);
+}
+.lg-support-icon {
+  transition: transform 0.18s ease;
+}
+.lg-support:hover .lg-support-icon {
+  transform: scale(1.06);
+}
+.lg-support p > span {
+  margin: 0 7px;
+}
+/* Keep the MFA card and the support prompt visually distinct when the
+   verification step is shown, including compact desktop/tablet widths. */
+#mfa-form:not([hidden]) {
+  padding-bottom: 14px;
+}
+#mfa-form:not([hidden]) + .lg-support-wrap {
+  position: relative;
+  z-index: 1;
+  margin-top: 24px;
+}
+#mfa-form:not([hidden]) + .lg-support-wrap .lg-support-title {
+  margin-bottom: 12px;
+}
+@media (min-width: 1025px) {
+  .lg-brand-panel { position: sticky; top: 0; height: 100svh; align-self: start; }
+  .lg-form-panel { width: min(100%, 580px); padding: 52px clamp(32px, 4vw, 64px); }
+  .lg-brand { margin-bottom: 30px; }
+  .lg-heading { margin-top: 18px; margin-bottom: 34px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 22px; }
+  .lg-ms { margin-bottom: 28px; }
+  .lg-divider { margin-bottom: 26px; }
+  .lg-support-wrap { margin-top: 28px; }
+  .lg-code-hint { font-size: clamp(10px, .75vw, 12px); white-space: nowrap; }
+}
+/* Short laptop viewports have the same two-column design, but less vertical
+   room than a large desktop. Keep the complete sign-in flow comfortably in
+   view instead of forcing the browser to open midway down the page. */
+@media (min-width: 1025px) and (max-height: 900px) {
+  .lg-form-panel { padding-top: 26px; padding-bottom: 26px; }
+  .lg-brand { margin-bottom: 16px; }
+  .lg-brand-mark { width: 60px; height: 60px; }
+  .lg-brand-rule { height: 66px; }
+  .lg-heading { margin-top: 8px; margin-bottom: 18px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 14px; }
+  .lg-ms { margin-bottom: 18px; }
+  .lg-divider { margin-bottom: 16px; }
+  .lg-support-wrap { margin-top: 18px; }
+}
+/* Very short laptop windows (including browser toolbars at higher zoom) need
+   one more small spacing pass. Controls keep their 48px touch target; only
+   the decorative and inter-section gaps shrink. */
+@media (min-width: 1025px) and (max-height: 760px) {
+  .lg-form-panel { padding-top: 14px; padding-bottom: 14px; }
+  .lg-brand { margin-bottom: 12px; }
+  .lg-brand-mark { width: 58px; height: 58px; }
+  .lg-brand-rule { height: 62px; }
+  .lg-heading { margin-top: 6px; margin-bottom: 14px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 11px; }
+  .lg-ms { margin-bottom: 14px; }
+  .lg-divider { margin-bottom: 12px; }
+  .lg-support-wrap { margin-top: 14px; }
+}
+@media (max-width: 767px) {
+  .lg-code-hint { max-width: 270px; margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 360px) {
+  .lg-mfa { padding: 24px 16px 20px; }
+  .lg-brand-name { font-size: clamp(17px, 5vw, 19px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lg-shell *, .lg-shell *::before, .lg-shell *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (max-width: 1024px) {
+  .lg-shell {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: 1fr;
+    overflow-x: hidden;
+  }
+  .lg-brand-panel {
+    display: none;
+  }
+  .lg-form-panel {
+    min-height: 100vh;
+    min-height: 100svh;
+    justify-content: center;
+    width: min(100%, 480px);
+    padding: 32px 28px;
+  }
+}
+@media (max-width: 1024px) and (max-height: 760px) {
+  .lg-form-panel {
+    justify-content: flex-start;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+@media (max-width: 479px) {
+  .lg-campus-menu {
+    max-height: min(258px, 42vh);
+  }
+  .lg-form-panel {
+    justify-content: flex-start;
+  }
+  .lg-brand-name {
+    font-size: 21px;
+  }
+  .lg-brand-mark {
+    width: 62px;
+    height: 62px;
+  }
+  .lg-brand-rule {
+    height: 68px;
+  }
+}
+@media (max-width: 360px) {
+  .lg-form-panel {
+    padding: 28px 20px;
+  }
+  .lg-brand {
+    gap: 10px;
+  }
+  .lg-brand-name {
+    font-size: 19px;
+    letter-spacing: 0.6px;
+  }
+  .lg-brand-mark {
+    width: 56px;
+    height: 56px;
+  }
+  .lg-brand-rule {
+    height: 60px;
+  }
+  .lg-support {
+    gap: 10px;
+    padding: 12px 10px;
+  }
+  .lg-support p {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lg-shell *,
+  .lg-shell *::before,
+  .lg-shell *::after {
+    transition: none !important;
+  }
+  .lg-submit[aria-busy]::before,
+  .lg-ms[aria-busy]::before {
+    animation: none;
+  }
+}
+
+/* Premium landscape login: the supplied artwork remains decorative while the
+   complete sign-in experience stays live, accessible HTML. Phones and portrait
+   tablets continue to use the simpler rules above. */
+@media (min-width: 1025px),
+  (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .lg-shell {
+    --lg-card-w: clamp(380px, 27vw, 480px); /* compact laptop card; the wordmark centres over it */
+    --lg-wm-w: clamp(150px, min(21vw, 30vh), 320px); /* smaller wordmark centred above the card */
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column; /* wordmark sits in the flow directly above the card: they can never overlap */
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    height: 100svh;
+    max-height: 100svh;
+    padding: clamp(18px, 3vh, 38px) clamp(72px, 9vw, 160px);
+    background: #d9edff url('../assets/login-hero-clouds.png') center center / cover no-repeat;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-family: var(--font);
+  }
+  body:has(.lg-shell) { overflow: hidden; }
+  .lg-brand-panel,
+  .lg-form-panel > .lg-brand {
+    display: none;
+  }
+  .lg-socials {
+    position: absolute;
+    z-index: 2;
+    left: clamp(18px, 3.2vw, 56px);
+    bottom: clamp(24px, 4.5vh, 48px);
+    display: grid;
+    grid-template-columns: repeat(4, 42px);
+    gap: 10px;
+    width: 198px;
+  }
+  .lg-social-link {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, .52);
+    border-radius: 50%;
+    background: rgba(241, 243, 248, .88);
+    box-shadow: 0 5px 14px rgba(8, 30, 70, .18), inset 0 1px rgba(255, 255, 255, .75);
+    transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
+  }
+  .lg-social-link img {
+    display: block;
+    width: 21px;
+    height: 21px;
+    object-fit: contain;
+  }
+  .lg-social-link:hover {
+    transform: translateY(-2px);
+    background: #fff;
+    box-shadow: 0 8px 18px rgba(8, 30, 70, .24), inset 0 1px rgba(255, 255, 255, .9);
+  }
+  .lg-social-link:focus-visible {
+    outline: 3px solid #f0b500;
+    outline-offset: 3px;
+  }
+  .lg-login-wordmark {
+    position: relative;
+    z-index: 1;
+    flex: none;
+    margin: 0 calc((var(--lg-card-w) - var(--lg-wm-w)) / 2) 10px 0;
+    width: var(--lg-wm-w);
+    height: auto;
+    transform: none;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+  }
+  .lg-form-panel {
+    --lg-navy: #072d69;
+    --lg-gold: #f0b500;
+    position: relative;
+    isolation: isolate;
+    align-self: flex-end;
+    justify-self: auto;
+    width: var(--lg-card-w);
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: clamp(18px, 1.6vw, 26px) clamp(20px, 2.2vw, 34px) clamp(14px, 1.2vw, 21px);
+    border: 2px solid rgba(255, 255, 255, .86);
+    border-radius: clamp(22px, 2vw, 32px);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, .78), rgba(221, 241, 255, .66) 48%, rgba(240, 249, 255, .84)),
+      rgba(220, 239, 255, .72);
+    box-shadow:
+      0 22px 60px rgba(9, 65, 126, .24),
+      0 4px 18px rgba(14, 70, 137, .16),
+      inset 0 0 0 5px rgba(180, 220, 255, .24),
+      inset 0 1px 18px rgba(255, 255, 255, .9);
+    backdrop-filter: blur(13px) saturate(1.12);
+    -webkit-backdrop-filter: blur(13px) saturate(1.12);
+  }
+  .lg-form-panel::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 10px;
+    border: 1px solid rgba(117, 178, 236, .25);
+    border-radius: calc(clamp(22px, 2vw, 32px) - 8px);
+    pointer-events: none;
+  }
+  .lg-form-panel::after {
+    display: none;
+  }
+  .lg-heading {
+    margin: 0 0 clamp(18px, 2.4vh, 28px);
+    text-align: center;
+  }
+  .lg-heading h1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--lg-navy);
+    font-family: var(--font);
+    font-size: clamp(29px, 2.15vw, 36px);
+    font-weight: 800;
+    letter-spacing: -1.8px;
+    line-height: .98;
+    text-shadow: 0 2px 3px rgba(255, 255, 255, .62);
+  }
+  .lg-heading-accent {
+    margin-top: 5px;
+    color: var(--lg-gold);
+  }
+  .lg-heading h1::after {
+    content: '';
+    width: 80px;
+    height: 4px;
+    margin-top: 16px;
+    border-radius: 999px;
+    background: var(--lg-gold);
+    box-shadow: 0 1px 5px rgba(240, 181, 0, .28);
+  }
+  .lg-label {
+    margin-bottom: 5px;
+    color: #082c64;
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .lg-select-wrap,
+  .lg-input-wrap {
+    margin-bottom: 10px;
+  }
+  .lg-select-trigger,
+  .lg-shell input {
+    height: 44px;
+    border: 1px solid #a9c9ee;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, .67);
+    color: #0b3474;
+    box-shadow: inset 0 1px 4px rgba(41, 109, 180, .05);
+  }
+  .lg-select-trigger {
+    padding-left: 46px;
+    font-weight: 600;
+  }
+  .lg-shell input {
+    padding-left: 46px;
+  }
+  .lg-shell input::placeholder {
+    color: #7d8ed0;
+    opacity: 1;
+  }
+  .lg-select-wrap > svg,
+  .lg-input-wrap > svg {
+    left: 15px;
+    width: 22px;
+    height: 22px;
+    stroke: #1938e6;
+    stroke-width: 2;
+  }
+  .lg-select-chevron,
+  .lg-pw-toggle {
+    color: #1839e6;
+  }
+  .lg-select-trigger:hover,
+  .lg-shell input:hover {
+    border-color: #739fdb;
+    background: rgba(255, 255, 255, .79);
+  }
+  .lg-select-trigger:focus-visible,
+  .lg-select-trigger[aria-expanded='true'],
+  .lg-shell input:focus {
+    border-color: #2949dc;
+    box-shadow: 0 0 0 3px rgba(41, 73, 220, .14);
+  }
+  .lg-campus-menu {
+    top: calc(100% - 8px);
+    border-color: #a9c9ee;
+    background: rgba(248, 252, 255, .98);
+    box-shadow: 0 18px 38px rgba(8, 52, 112, .2);
+  }
+  .lg-ms {
+    height: 46px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(54, 135, 218, .58);
+    border-radius: 9px;
+    background: linear-gradient(100deg, #063a7d, #07448d 52%, #06356f);
+    box-shadow: 0 8px 18px rgba(6, 58, 125, .2), inset 0 1px rgba(255, 255, 255, .16);
+    font-size: 15px;
+  }
+  .lg-ms:hover {
+    background: linear-gradient(100deg, #052f67, #073b79 52%, #052c5d);
+  }
+  .lg-divider {
+    margin-bottom: 14px;
+    color: #6c87c8;
+    font-size: 11px;
+    letter-spacing: .45px;
+  }
+  .lg-divider span {
+    background: #8cb5e4;
+  }
+  .lg-forgot {
+    color: #d39b00;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .lg-forgot:hover {
+    color: #9f7500;
+  }
+  .lg-submit {
+    height: 46px;
+    border: 1px solid #f3c51b;
+    border-radius: 10px;
+    background: linear-gradient(100deg, #ffd42d, #f2b800 55%, #ffd73b);
+    color: #082c64;
+    box-shadow: 0 8px 18px rgba(183, 135, 0, .2), inset 0 1px rgba(255, 255, 255, .72);
+    font-size: 16px;
+    font-weight: 800;
+  }
+  .lg-submit:hover {
+    background: linear-gradient(100deg, #f4c311, #e3a900 55%, #f8c91d);
+  }
+  .lg-support-wrap {
+    margin-top: 14px;
+    color: #173dd7;
+  }
+  .lg-support-title {
+    margin-bottom: 9px;
+    color: #173dd7;
+    font-size: 12px;
+  }
+  .lg-support {
+    min-height: 48px;
+    padding: 7px 14px;
+    border-color: #a7c9ec;
+    border-radius: 9px;
+    background: rgba(214, 235, 255, .6);
+    color: #173dd7;
+    box-shadow: inset 0 1px rgba(255, 255, 255, .58);
+  }
+  .lg-support:hover {
+    border-color: #7aa9da;
+    background: rgba(222, 241, 255, .78);
+  }
+  .lg-support a {
+    color: #173dd7;
+  }
+  .lg-support-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .lg-mfa {
+    border-color: rgba(145, 187, 228, .72);
+    background: rgba(245, 251, 255, .62);
+    box-shadow: inset 0 1px rgba(255, 255, 255, .72);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .lg-shell {
+    padding: 16px 20px;
+  }
+  .lg-form-panel {
+    width: min(46vw, 470px);
+    padding: 22px 28px 20px;
+    border-radius: 24px;
+  }
+  .lg-heading {
+    margin-bottom: 17px;
+  }
+  .lg-heading h1 {
+    font-size: clamp(29px, 4vw, 38px);
+    letter-spacing: -1.2px;
+  }
+  .lg-heading h1::after {
+    width: 62px;
+    height: 3px;
+    margin-top: 13px;
+  }
+  .lg-select-wrap,
+  .lg-input-wrap {
+    margin-bottom: 10px;
+  }
+  .lg-ms,
+  .lg-divider {
+    margin-bottom: 12px;
+  }
+  .lg-support-wrap {
+    margin-top: 12px;
+  }
+}
+
+@media (min-width: 1025px) and (max-height: 820px) {
+  .lg-shell {
+    align-items: flex-start;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .lg-form-panel {
+    width: clamp(450px, 32vw, 540px);
+    padding: 20px 30px 18px;
+  }
+  .lg-heading {
+    margin-bottom: 19px;
+  }
+  .lg-heading h1 {
+    font-size: clamp(30px, 2.5vw, 40px);
+  }
+  .lg-heading h1::after {
+    height: 3px;
+    margin-top: 12px;
+  }
+  .lg-select-wrap,
+  .lg-input-wrap {
+    margin-bottom: 10px;
+  }
+  .lg-ms,
+  .lg-divider {
+    margin-bottom: 12px;
+  }
+  .lg-support-wrap {
+    margin-top: 11px;
+  }
+}
+
+/* Calendar */
+.cal-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--s3);
+}
+.cal-title {
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-md);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s4);
+  font-size: var(--fs-xs);
+  margin-bottom: var(--s3);
+}
+.legend span {
+  display: inline-flex;
+  gap: var(--s2);
+  align-items: center;
+}
+.legend i {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--r-xs);
+  display: inline-block;
+}
+.ev {
+  display: block;
+  border-radius: var(--r-sm);
+  padding: 4px 8px;
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+  color: #fff;
+  text-align: left;
+  width: 100%;
+  border: 0;
+}
+.ev b {
+  display: block;
+}
+.ev-class {
+  background: var(--nu-blue);
+}
+.ev-maint {
+  background: repeating-linear-gradient(135deg, var(--nu-navy) 0 7px, var(--primary-900) 7px 14px);
+  border: 0;
+  border-left: 4px solid var(--accent);
+}
+.ev-sub {
+  display: block;
+  opacity: 0.9;
+  font-weight: var(--fw-regular);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.swatch-maint {
+  background: repeating-linear-gradient(135deg, var(--nu-navy) 0 4px, var(--primary-900) 4px 8px);
+  border-left: 3px solid var(--accent);
+}
+.ev-conflict {
+  background: var(--warning);
+  color: var(--on-accent);
+}
+.ev-selected {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.ev-avail {
+  background: var(--success);
+}
+.ev-unavail {
+  background: var(--error);
+}
+.cal-scroll {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+.cal-grid {
+  display: grid;
+  min-width: 100%;
+}
+.cal-row {
+  display: contents;
+}
+.cal-grid.month {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.cal-grid.week {
+  grid-template-columns: repeat(7, minmax(7.5rem, 1fr));
+  min-width: 840px;
+}
+.cal-cell {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 4px;
+  min-height: 96px;
+  min-width: 0;
+  background: var(--surface);
+}
+.cal-cell.head {
+  min-height: 0;
+  font-weight: var(--fw-bold);
+  text-align: center;
+  background: var(--surface-alt);
+  font-size: var(--fs-xs);
+}
+.cal-cell.other {
+  background: var(--surface-alt);
+}
+.cal-cell.other .dn {
+  color: var(--text-muted);
+  font-weight: var(--fw-regular);
+}
+.cal-cell.today {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+  background: var(--tint);
+}
+.cal-cell.today .dn {
+  color: var(--primary);
+  font-weight: var(--fw-bold);
+}
+.cal-cell .dn {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  margin-bottom: var(--s0);
+  display: block;
+  background: none;
+  border: 0;
+  color: var(--text);
+  text-align: left;
+}
+.cal-cell .ev {
+  margin-bottom: var(--s1);
+}
+.cal-dots {
+  display: none;
+  gap: var(--s1);
+  flex-wrap: wrap;
+}
+@media (max-width: 639px) {
+  .cal-dots {
+    display: flex;
+  }
+}
+.cal-dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.agenda {
+  display: grid;
+  gap: var(--s2);
+}
+.agenda .slot {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: var(--s3);
+  align-items: start;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+.agenda .slot .time {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: var(--fw-semibold);
+}
+.room-free {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}
+.room-free .ev {
+  width: auto;
+}
+
+/* Ticket detail */
+.detail-grid {
+  display: grid;
+  gap: var(--s4);
+}
+.attach-grid {
+  display: grid;
+  gap: var(--s2);
+  grid-template-columns: repeat(auto-fill, minmax(6.875rem, 1fr));
+}
+.attachment-group {
+  margin-top: var(--s3);
+}
+.attachment-group:first-of-type {
+  margin-top: 0;
+}
+.attachment-group + .attachment-group {
+  margin-top: var(--s4);
+}
+.attachment-group > h3 {
+  margin: 0 0 var(--s2);
+}
+.attach {
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: var(--s2);
+  text-align: center;
+  font-size: var(--fs-xs);
+  background: var(--surface-alt);
+}
+.attach img,
+.attach .ph {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: var(--r-xs);
+  display: grid;
+  place-items: center;
+  background: var(--border);
+  color: var(--text-muted);
+}
+.note {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 8px 12px;
+  margin-bottom: var(--s2);
+  background: var(--surface-alt);
+}
+.note.internal {
+  border-left: 4px solid var(--nu-navy);
+}
+.note.public {
+  border-left: 4px solid var(--nu-blue);
+}
+.verify-box {
+  border: 2px solid var(--primary);
+  border-radius: var(--r-lg);
+  padding: var(--s4);
+  background: color-mix(in srgb, var(--nu-gold) 12%, var(--surface));
+}
+.verify-box h3 {
+  margin-top: 0;
+}
+
+/* Success page */
+.success-page {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.success-page .big-check {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--success);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  margin: 0 auto var(--s3);
+}
+.success-page .big-check .icon {
+  width: 48px;
+  height: 48px;
+}
+.success-page .tid {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+}
+
+/* QR print */
+.qr-box {
+  text-align: center;
+  padding: var(--s4);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--r-md);
+  border: 2px solid var(--nu-navy);
+  display: inline-block;
+}
+.qr-box canvas,
+.qr-box img {
+  max-width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+/* Floor map */
+.floor-map {
+  display: grid;
+  gap: var(--s2);
+  grid-template-columns: repeat(auto-fill, minmax(6.875rem, 1fr));
+}
+.floor-room {
+  border: 2px solid var(--nu-blue);
+  border-radius: var(--r-sm);
+  padding: var(--s3) var(--s2);
+  background: var(--surface);
+  text-align: center;
+  font-size: var(--fs-xs);
+  color: var(--text);
+  min-height: 64px;
+}
+.floor-room.closed {
+  border-color: var(--error);
+}
+
+.hero-welcome {
+  background: var(--primary-50);
+  color: var(--text);
+  border: 1px solid var(--primary-100);
+  border-radius: var(--r-lg);
+  padding: var(--s3) var(--s4);
+}
+.hero-welcome h1,
+.hero-welcome h2 {
+  margin: 0 0 var(--s1);
+  color: var(--primary);
+  font-size: var(--fs-lg);
+}
+.hero-welcome p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+.hero-welcome.rich {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  min-height: clamp(160px, 13vw, 220px);
+  padding: clamp(24px, 3vw, 44px) clamp(24px, 4vw, 56px);
+  border: 1px solid var(--primary-100);
+  border-left: 6px solid var(--accent);
+  background-color: #0a3677;
+  background-image:
+    linear-gradient(90deg, rgba(4, 28, 79, .12) 0%, rgba(4, 28, 79, .06) 54%, rgba(4, 28, 79, .02) 100%),
+    url('../assets/dashboard-campus-banner-v3.png');
+  /* The generated banner carries the soft navy-to-campus transition and
+     restrained gold accent; this light overlay keeps live greeting text clear. */
+  background-position: 0 0, center center;
+  background-size: cover, cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(7, 33, 77, .2);
+  border-radius: var(--r-lg);
+}
+.hero-welcome.rich .hw-icon {
+  flex: none;
+  position: relative;
+  z-index: 2;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  border: 2px solid rgba(255, 255, 255, .72);
+  box-shadow: 0 8px 18px rgba(2, 19, 57, .3);
+}
+.hero-welcome.rich .hw-icon .icon {
+  width: 1em;
+  height: 1em;
+}
+.hero-welcome.rich .hw-text {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  max-width: min(760px, 72%);
+}
+.hero-welcome.rich .hw-hello {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: rgba(255, 255, 255, .86);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+.hero-welcome.rich h1 {
+  color: #fff;
+  font-size: clamp(1.6rem, 2.6vw, 2.7rem);
+  margin: 0 0 var(--s2);
+  overflow-wrap: anywhere;
+  line-height: 1.08;
+  text-shadow: 0 2px 10px rgba(2, 19, 57, .42);
+}
+.hero-welcome.rich .hw-name {
+  color: #f5bd22;
+}
+.hero-welcome.rich .hw-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}
+.hero-welcome.rich .hw-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .62);
+  color: #fff;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  box-shadow: 0 3px 10px rgba(2, 19, 57, .16);
+}
+.hero-welcome.rich .hw-date {
+  background: rgba(3, 25, 68, .28);
+  border-color: rgba(255, 255, 255, .54);
+}
+@media (max-width: 1024px) {
+  .hero-welcome.rich {
+    min-height: clamp(150px, 24vw, 190px);
+    padding: clamp(20px, 3vw, 32px) clamp(20px, 4vw, 36px);
+    background-position: 0 0, center center;
+  }
+  .hero-welcome.rich .hw-text { max-width: 78%; }
+  .hero-welcome.rich h1 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
+}
+@media (max-width: 479px) {
+  .hero-welcome.rich {
+    min-height: 178px;
+    padding: 24px 20px;
+    gap: var(--s3);
+    background-image:
+      linear-gradient(135deg, transparent 0 68%, rgba(245, 189, 34, .12) 68% 70%, transparent 70%),
+      repeating-linear-gradient(116deg, rgba(92, 154, 213, .13) 0 24px, transparent 24px 86px),
+      linear-gradient(110deg, #061f59 0%, #0a3677 58%, #155d9a 100%);
+    background-position: 0 0;
+    background-size: cover;
+  }
+  .hero-welcome.rich .hw-icon {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+  .hero-welcome.rich .hw-text {
+    width: 100%;
+    max-width: 100%;
+    padding-right: 52px;
+    text-align: left;
+  }
+  .hero-welcome.rich h1 {
+    font-size: clamp(1.35rem, 7vw, 1.9rem);
+  }
+}
+.not-avail {
+  text-align: center;
+  max-width: 480px;
+  margin: var(--s6) auto;
+}
+.workload-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: var(--s2) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 640px) {
+  .loc-tables .tbl {
+    table-layout: fixed;
+  }
+  .loc-tables .tbl th:nth-child(1),
+  .loc-tables .tbl td:nth-child(1) {
+    width: 18%;
+  }
+  .loc-tables .tbl th:nth-child(2),
+  .loc-tables .tbl td:nth-child(2) {
+    width: 24%;
+  }
+  .loc-tables .tbl th:nth-child(3),
+  .loc-tables .tbl td:nth-child(3) {
+    width: 16%;
+  }
+  .loc-tables .tbl th:nth-child(4),
+  .loc-tables .tbl td:nth-child(4) {
+    width: 18%;
+  }
+  .loc-tables .tbl th:nth-child(5),
+  .loc-tables .tbl td:nth-child(5) {
+    width: 24%;
+  }
+  .loc-tables .tbl td code {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+  }
+  .loc-tables .trunc {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .loc-tables .badge.trunc {
+    display: inline-flex;
+    max-width: 100%;
+  }
+}
+
+/* Sign-in on short desktop windows (laptops, browser zoom): shrink the wordmark and trim the outer padding so the stacked wordmark + card fit with little or no scrolling. Placed last so it overrides the desktop block above. */
+@media (min-width: 1025px) and (max-height: 900px),
+  (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) and (max-height: 900px) {
+  .lg-shell {
+    --lg-wm-w: clamp(150px, min(21vw, 28vh), 320px);
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .lg-login-wordmark {
+    margin-bottom: -4px;
+  }
+}
+
+/* Sign-in, windows up to 800px tall (laptops at 125% display scaling are about 730px tall): trim the shell's bottom padding, wordmark and control sizes a little so the wordmark and the whole card fit without page scrolling, and keep the wordmark clear of the card. */
+@media (min-width: 1025px) and (max-height: 800px),
+  (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) and (max-height: 800px) {
+  .lg-shell { --lg-c: 44px; --lg-wm-w: clamp(150px, min(21vw, 25vh), 320px); padding: 12px clamp(72px, 9vw, 160px); }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-login-wordmark { margin-bottom: 8px; }
+  .lg-form-panel { padding-top: 18px; padding-bottom: 14px; }
+  .lg-heading { margin: 4px 0 14px; }
+  .lg-heading h1 { font-size: 27px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 8px; }
+  .lg-ms { margin-bottom: 10px; }
+  .lg-divider { margin-bottom: 10px; }
+  .lg-support-wrap { margin-top: 10px; }
+}
+/* Sign-in, windows up to 720px tall: tighter controls and gaps so the whole form fits without page scrolling. */
+@media (min-width: 1025px) and (max-height: 720px),
+  (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) and (max-height: 720px) {
+  .lg-shell { --lg-c: 42px; --lg-wm-w: clamp(150px, min(21vw, 22vh), 320px); padding-top: 10px; padding-bottom: 10px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { padding-top: 16px; padding-bottom: 12px; }
+  .lg-heading { margin: 4px 0 12px; }
+  .lg-heading h1 { font-size: 24px; }
+  .lg-label { margin-bottom: 4px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 8px; }
+  .lg-ms { margin-bottom: 10px; }
+  .lg-divider { margin-bottom: 10px; }
+  .lg-forgot { padding: 4px 0; margin-top: -8px; margin-bottom: 6px; }
+  .lg-support-wrap { margin-top: 10px; }
+  .lg-support-title { margin-bottom: 4px; }
+  .lg-support { padding: 7px 12px; }
+}
+/* Sign-in, windows up to 640px tall: tighter controls and gaps so the whole form fits without page scrolling. */
+@media (min-width: 1025px) and (max-height: 640px),
+  (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) and (max-height: 640px) {
+  .lg-shell { --lg-c: 38px; --lg-wm-w: clamp(150px, min(21vw, 19vh), 320px); padding-top: 8px; padding-bottom: 8px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { padding-top: 13px; padding-bottom: 8px; }
+  .lg-heading { margin: 2px 0 9px; }
+  .lg-heading h1 { font-size: 21px; }
+  .lg-label { margin-bottom: 3px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 6px; }
+  .lg-ms { margin-bottom: 8px; }
+  .lg-divider { margin-bottom: 8px; }
+  .lg-forgot { padding: 3px 0; margin-top: -6px; margin-bottom: 4px; }
+  .lg-support-wrap { margin-top: 6px; }
+  .lg-support-title { margin-bottom: 3px; }
+  .lg-support { padding: 5px 10px; }
+}
+/* Sign-in, windows up to 580px tall: tighter controls and gaps so the whole form fits without page scrolling. */
+@media (min-width: 1025px) and (max-height: 580px),
+  (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) and (max-height: 580px) {
+  .lg-shell { --lg-c: 34px; --lg-wm-w: clamp(150px, min(21vw, 17vh), 320px); padding-top: 6px; padding-bottom: 6px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { padding-top: 11px; padding-bottom: 6px; }
+  .lg-heading { margin: 0 0 7px; }
+  .lg-heading h1 { font-size: 19px; }
+  .lg-label { margin-bottom: 2px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 4px; }
+  .lg-ms { margin-bottom: 6px; }
+  .lg-divider { margin-bottom: 6px; }
+  .lg-forgot { padding: 2px 0; margin-top: -4px; margin-bottom: 2px; }
+  .lg-support-wrap { margin-top: 4px; }
+  .lg-support-title { margin-bottom: 2px; }
+  .lg-support { padding: 4px 8px; }
+}
+
+/* Keep the wordmark right-aligned and centred over the card where earlier rules change the card width or top-align the shell. */
+@media (min-width: 1025px) and (max-height: 820px) {
+  .lg-shell {
+    --lg-card-w: clamp(380px, 27vw, 480px);
+    align-items: flex-end;
+  }
+  .lg-form-panel { width: var(--lg-card-w); }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .lg-shell {
+    --lg-card-w: min(46vw, 470px);
+    align-items: flex-end;
+  }
+}
+
+/* Portrait tablets remain viewport-locked like desktop, while their card stays centred. */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .lg-shell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(12px, 2vh, 20px) 20px;
+    height: 100svh;
+    max-height: 100svh;
+    overflow: hidden;
+  }
+  .lg-login-wordmark {
+    position: relative;
+    width: clamp(150px, 26vw, 220px);
+    height: auto;
+    margin: 0 0 8px;
+  }
+  .lg-form-panel {
+    width: min(100%, 480px);
+    margin: 0 auto;
+  }
+  body:has(.lg-shell) { overflow: hidden; }
+}
+
+/* Phones keep the compact wordmark header and do not show the desktop/tablet
+   social group, so the sign-in flow remains focused and naturally scrollable. */
+@media (max-width: 767px),
+  (max-width: 1024px) and (orientation: portrait) {
+  .lg-shell {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: stretch;
+    align-content: start;
+    align-items: center;
+    column-gap: 14px;
+    padding: 10px 0 0;
+  }
+  .lg-login-wordmark {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    position: static;
+    width: auto;
+    max-width: none;
+    height: clamp(32px, 5svh, 48px);
+    margin: 0;
+    justify-self: center;
+  }
+  .lg-form-panel {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-height: 0;
+    margin: 8px auto 0;
+    justify-content: flex-start;
+    padding-top: 16px;
+    padding-bottom: 18px;
+  }
+}
+
+/* Portrait tablets use the same centred wordmark-over-card composition as the
+   larger layouts; phones retain the compact two-column header below. */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .lg-shell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(12px, 2vh, 20px) 20px;
+  }
+  .lg-login-wordmark {
+    position: relative;
+    width: clamp(150px, 26vw, 220px);
+    height: auto;
+    margin: 0 0 8px;
+  }
+  .lg-form-panel {
+    width: min(100%, 480px);
+    margin: 0 auto;
+  }
+}
+
+/* Short portrait tablets use the same compact height progression as laptops
+   so the viewport-locked sign-in card remains fully visible. */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) and (max-height: 900px) {
+  .lg-form-panel { padding-top: 10px; padding-bottom: 10px; }
+  .lg-login-wordmark { margin-bottom: 4px; }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) and (max-height: 800px) {
+  .lg-shell { --lg-c: 44px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { padding-top: 8px; padding-bottom: 8px; }
+  .lg-heading { margin: 4px 0 14px; }
+  .lg-heading h1 { font-size: 27px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 8px; }
+  .lg-ms, .lg-divider { margin-bottom: 10px; }
+  .lg-support-wrap { margin-top: 10px; }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) and (max-height: 720px) {
+  .lg-shell { --lg-c: 42px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { padding-top: 6px; padding-bottom: 6px; }
+  .lg-heading { margin: 2px 0 10px; }
+  .lg-heading h1 { font-size: 24px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 6px; }
+  .lg-ms, .lg-divider { margin-bottom: 8px; }
+  .lg-support-wrap { margin-top: 8px; }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) and (max-height: 640px) {
+  .lg-shell { --lg-c: 38px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { padding-top: 5px; padding-bottom: 5px; }
+  .lg-heading { margin: 0 0 7px; }
+  .lg-heading h1 { font-size: 21px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 5px; }
+  .lg-ms, .lg-divider { margin-bottom: 6px; }
+  .lg-support-wrap { margin-top: 6px; }
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) and (max-height: 580px) {
+  .lg-shell { --lg-c: 34px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { padding-top: 4px; padding-bottom: 4px; }
+  .lg-heading { margin: 0 0 5px; }
+  .lg-heading h1 { font-size: 19px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 4px; }
+  .lg-ms, .lg-divider { margin-bottom: 5px; }
+  .lg-support-wrap { margin-top: 4px; }
+}
+
+/* Phones keep the centered wordmark but hide the desktop/tablet social group. */
+@media (max-width: 767px) {
+  .lg-socials { display: none; }
+  .lg-login-wordmark { display: block; }
+  .lg-form-panel { grid-row: 2; margin-top: 4px; }
+}
+
+/* Phones up to 880px tall: tighter controls, gaps and header so the whole form fits one screen. */
+@media (max-width: 767px) and (max-height: 880px) {
+  .lg-shell { --lg-c: 46px; padding-top: 8px; }
+  .lg-login-wordmark { height: 40px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { margin-top: 4px; padding-top: 14px; padding-bottom: 14px; }
+  .lg-brand { margin: 0 0 14px; }
+  .lg-brand-mark { width: 58px; height: 58px; }
+  .lg-brand-rule { height: 62px; }
+  .lg-brand-name { font-size: 19px; }
+  .lg-heading { margin: 0 0 14px; }
+  .lg-heading h1 { font-size: 24px; padding: 4px 12px 5px; }
+  .lg-label { margin-bottom: 5px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 10px; }
+  .lg-ms { margin-bottom: 12px; }
+  .lg-divider { margin-bottom: 12px; }
+  .lg-forgot { padding: 8px 0 0; margin-top: -10px; margin-bottom: 6px; }
+  .lg-support-wrap { margin-top: 14px; }
+  .lg-support-title { margin-bottom: 5px; }
+  .lg-support { padding: 10px 12px; }
+}
+/* Phones up to 800px tall: tighter controls, gaps and header so the whole form fits one screen. */
+@media (max-width: 767px) and (max-height: 800px) {
+  .lg-shell { --lg-c: 44px; padding-top: 6px; }
+  .lg-login-wordmark { height: 34px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { margin-top: 4px; padding-top: 12px; padding-bottom: 12px; }
+  .lg-brand { margin: 0 0 12px; }
+  .lg-brand-mark { width: 52px; height: 52px; }
+  .lg-brand-rule { height: 56px; }
+  .lg-brand-name { font-size: 17px; }
+  .lg-heading { margin: 0 0 12px; }
+  .lg-heading h1 { font-size: 22px; padding: 4px 12px 5px; }
+  .lg-label { margin-bottom: 4px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 8px; }
+  .lg-ms { margin-bottom: 10px; }
+  .lg-divider { margin-bottom: 10px; }
+  .lg-forgot { padding: 8px 0 0; margin-top: -8px; margin-bottom: 4px; }
+  .lg-support-wrap { margin-top: 10px; }
+  .lg-support-title { margin-bottom: 4px; }
+  .lg-support { padding: 8px 10px; }
+}
+/* Phones up to 740px tall: tighter controls, gaps and header so the whole form fits one screen. */
+@media (max-width: 767px) and (max-height: 740px) {
+  .lg-shell { --lg-c: 42px; padding-top: 6px; }
+  .lg-login-wordmark { height: 30px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { margin-top: 4px; padding-top: 10px; padding-bottom: 8px; }
+  .lg-brand { margin: 0 0 8px; }
+  .lg-brand-mark { width: 46px; height: 46px; }
+  .lg-brand-rule { height: 50px; }
+  .lg-brand-name { font-size: 17px; }
+  .lg-heading { margin: 0 0 8px; }
+  .lg-heading h1 { font-size: 21px; padding: 4px 12px 5px; }
+  .lg-label { margin-bottom: 3px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 6px; }
+  .lg-ms { margin-bottom: 8px; }
+  .lg-divider { margin-bottom: 8px; }
+  .lg-forgot { padding: 8px 0 0; margin-top: -6px; margin-bottom: 3px; }
+  .lg-support-wrap { margin-top: 8px; }
+  .lg-support-title { margin-bottom: 3px; }
+  .lg-support { padding: 6px 10px; }
+}
+/* Phones up to 680px tall: tighter controls, gaps and header so the whole form fits one screen. */
+@media (max-width: 767px) and (max-height: 680px) {
+  .lg-shell { --lg-c: 38px; padding-top: 4px; }
+  .lg-login-wordmark { height: 26px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { margin-top: 4px; padding-top: 8px; padding-bottom: 6px; }
+  .lg-brand { margin: 0 0 6px; }
+  .lg-brand-mark { width: 40px; height: 40px; }
+  .lg-brand-rule { height: 44px; }
+  .lg-brand-name { font-size: 15px; }
+  .lg-heading { margin: 0 0 6px; }
+  .lg-heading h1 { font-size: 20px; padding: 4px 12px 5px; }
+  .lg-label { margin-bottom: 3px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 5px; }
+  .lg-ms { margin-bottom: 7px; }
+  .lg-divider { margin-bottom: 6px; }
+  .lg-forgot { padding: 8px 0 0; margin-top: -5px; margin-bottom: 2px; }
+  .lg-support-wrap { margin-top: 6px; }
+  .lg-support-title { margin-bottom: 2px; }
+  .lg-support { padding: 5px 8px; }
+}
+/* Phones up to 620px tall: tighter controls, gaps and header so the whole form fits one screen. */
+@media (max-width: 767px) and (max-height: 620px) {
+  .lg-shell { --lg-c: 34px; padding-top: 3px; }
+  .lg-login-wordmark { height: 24px; }
+  .lg-shell select, .lg-shell input, .lg-select-trigger, .lg-submit, .lg-ms { height: var(--lg-c); }
+  .lg-form-panel { margin-top: 4px; padding-top: 6px; padding-bottom: 4px; }
+  .lg-brand { margin: 0 0 4px; }
+  .lg-brand-mark { width: 36px; height: 36px; }
+  .lg-brand-rule { height: 40px; }
+  .lg-brand-name { font-size: 15px; }
+  .lg-heading { margin: 0 0 4px; }
+  .lg-heading h1 { font-size: 18px; padding: 4px 12px 5px; }
+  .lg-label { margin-bottom: 2px; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: 4px; }
+  .lg-ms { margin-bottom: 6px; }
+  .lg-divider { margin-bottom: 5px; }
+  .lg-forgot { padding: 8px 0 0; margin-top: -4px; margin-bottom: 2px; }
+  .lg-support-wrap { margin-top: 4px; }
+  .lg-support-title { margin-bottom: 2px; }
+  .lg-support { padding: 4px 8px; }
+}
+
+/* Desktop MFA spacing: keep the help prompt visually below the verification
+   card and leave a small, responsive breathing area before the login panel's
+   lower edge. The selector is intentionally limited to the visible MFA state
+   so the ordinary sign-in form and phone layout keep their existing spacing. */
+@media (min-width: 1025px) {
+  .lg-form-panel:has(#mfa-form:not([hidden])) {
+    flex: 0 0 auto;
+    padding-bottom: clamp(28px, 3vh, 38px);
+  }
+  #mfa-form:not([hidden]) + .lg-support-wrap {
+    margin-top: clamp(30px, 3.5vh, 38px);
+    flex: 0 0 auto;
+  }
+}
+
+/* Sign-in heading on desktop: "Facility Support Portal" on one line (accent word in gold), underline centred below. Placed last so it overrides the stacked heading above. */
+@media (min-width: 1025px),
+  (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .lg-heading h1 {
+    display: block;
+    white-space: nowrap;
+    text-align: center;
+  }
+  .lg-heading h1 > span { display: inline; }
+  .lg-heading-accent { margin-top: 0; }
+  .lg-heading h1::after { display: block; margin: 14px auto 0; }
+}
+
+/* With the one-line heading the card is shorter: on tall desktop windows give the heading and the wordmark more breathing room. */
+@media (min-width: 1025px) and (min-height: 801px) {
+  .lg-form-panel { padding-top: clamp(22px, 1.9vw, 34px); }
+  .lg-login-wordmark { margin-bottom: 20px; }
+  .lg-heading { margin-bottom: clamp(18px, 2vh, 26px); }
+}
+
+/* Two-step verification card on short desktop windows: compact spacing (same content) so the card, wordmark and support strip fit without page scrolling. */
+@media (min-width: 1025px) and (max-height: 900px),
+  (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) and (max-height: 900px) {
+  .lg-mfa { padding: 16px 20px 12px; }
+  .lg-verification-badge { width: 38px; height: 38px; margin-bottom: 8px; }
+  .lg-verification-badge img { width: 28px; height: 28px; }
+  .lg-account-chip { padding: 4px 10px; margin-bottom: 10px; }
+  .lg-mfa-title { font-size: 22px; margin: 8px 0 6px; }
+  .lg-mfa-text { margin-bottom: 10px; line-height: 1.4; font-size: 13px; }
+  .lg-mfa #mfa-code { height: 46px; line-height: 46px; font-size: 22px; }
+  .lg-code-hint { margin: 6px 0 10px; line-height: 1.35; }
+  .lg-mfa-actions { margin-top: 6px; gap: 4px; }
+}
+@media (min-width: 1025px) and (max-height: 720px),
+  (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) and (max-height: 720px) {
+  .lg-mfa { padding: 10px 16px 8px; }
+  .lg-verification-badge { width: 30px; height: 30px; margin-bottom: 4px; }
+  .lg-verification-badge img { width: 22px; height: 22px; }
+  .lg-mfa-title { font-size: 19px; margin: 4px 0 4px; }
+  .lg-mfa-text { margin-bottom: 6px; font-size: 12px; }
+  .lg-account-chip { margin-bottom: 6px; }
+  .lg-mfa #mfa-code { height: 38px; line-height: 38px; font-size: 19px; }
+  .lg-code-hint { margin: 4px 0 6px; }
+}
+@media (min-width: 1025px) and (max-height: 580px),
+  (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) and (max-height: 580px) {
+  .lg-mfa { padding: 6px 14px 4px; }
+  .lg-verification-badge { width: 24px; height: 24px; margin-bottom: 2px; border-radius: 8px; }
+  .lg-verification-badge img { width: 18px; height: 18px; }
+  .lg-verification-eyebrow { font-size: 10px; }
+  .lg-mfa-title { font-size: 16px; margin: 2px 0 2px; }
+  .lg-mfa-text { margin-bottom: 3px; font-size: 11px; line-height: 1.3; }
+  .lg-account-chip { padding: 2px 8px; margin-bottom: 3px; font-size: 12px; }
+  .lg-mfa #mfa-code { height: 32px; line-height: 32px; font-size: 16px; }
+  .lg-code-hint { margin: 2px 0 4px; font-size: 11px; line-height: 1.25; }
+  .lg-mfa-actions { margin-top: 2px; }
+}
+
+/* Phones: the "Facility Support Portal" card look from desktop (glass card on the sky background, one-line heading with a gold "Portal" and underline),
+   with spacing that scales with the screen height so the form uses the whole phone instead of bunching at the top. Placed last so it wins over the compact height steps above. */
+@media (max-width: 767px) {
+  .lg-shell {
+    --lg-navy: #072d69;
+    --lg-gold: #f0b500;
+    --lg-gap: clamp(12px, 2.7svh, 28px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 0;
+    height: auto;
+    max-height: none;
+    overflow-y: auto;
+    box-sizing: border-box;
+    background: #fff; /* plain white page: no sky photo and no floating card on phones */
+  }
+  body:has(.lg-shell) { overflow: auto; }
+  .lg-form-panel {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    padding: clamp(20px, 4svh, 40px) clamp(20px, 6vw, 28px);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .lg-brand { margin: 0 0 var(--lg-gap); gap: 12px; }
+  .lg-brand-mark { width: clamp(52px, 8svh, 68px); height: clamp(52px, 8svh, 68px); }
+  .lg-brand-rule { height: clamp(56px, 8.6svh, 72px); }
+  .lg-brand-name { font-size: clamp(18px, 2.7svh, 23px); }
+  .lg-heading { margin: 0 0 calc(var(--lg-gap) * 1.3); }
+  .lg-heading h1 {
+    display: block;
+    text-align: center;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    white-space: nowrap;
+    font-size: clamp(22px, 6.6vw, 30px);
+    letter-spacing: -1.2px;
+    line-height: 1;
+    text-shadow: 0 2px 3px rgba(255, 255, 255, .62);
+  }
+  .lg-heading h1 > span { display: inline; }
+  .lg-heading-accent { color: var(--lg-gold); }
+  .lg-heading h1::after {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 4px;
+    margin: clamp(10px, 1.6svh, 15px) auto 0;
+    border-radius: 999px;
+    background: var(--lg-gold);
+    box-shadow: 0 1px 5px rgba(240, 181, 0, .28);
+  }
+  .lg-label { margin-bottom: clamp(5px, .9svh, 8px); color: #082c64; }
+  .lg-select-wrap, .lg-input-wrap { margin-bottom: var(--lg-gap); }
+  .lg-ms { margin-bottom: var(--lg-gap); }
+  .lg-divider { margin-bottom: var(--lg-gap); }
+  .lg-forgot { margin-top: calc(var(--lg-gap) * -.5); margin-bottom: var(--lg-gap); }
+  .lg-support-wrap { margin-top: var(--lg-gap); }
+  .lg-support { padding: clamp(10px, 1.6svh, 16px) 12px; }
+}
+
+/* Desktop MFA balance: keep the verification mark and the secondary back
+   action compact without changing the recovery control's touch size or the
+   phone layout. */
+@media (min-width: 1025px) {
+  .lg-verification-badge {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 12px;
+  }
+  .lg-verification-badge img {
+    width: 31px;
+    height: 31px;
+  }
+  .lg-mfa-actions {
+    margin-top: 14px;
+  }
+  #mfa-form:not([hidden]) .lg-back {
+    min-height: 39px;
+    padding: 7px 12px;
+  }
+}
+
+@media (min-width: 1025px) and (max-height: 900px) {
+  .lg-verification-badge {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 7px;
+  }
+  .lg-verification-badge img {
+    width: 25px;
+    height: 25px;
+  }
+  .lg-mfa-actions {
+    margin-top: 4px;
+  }
+  #mfa-form:not([hidden]) .lg-back {
+    min-height: 38px;
+    padding: 6px 10px;
+  }
+}
+
+/* Final login branding policy: desktop uses the external wordmark and one
+   horizontal social row; every subdesktop layout uses the in-card branding
+   and hides social links so neither source can duplicate or wrap. */
+@media (min-width: 1025px) {
+  .lg-socials {
+    display: grid;
+    grid-template-columns: repeat(7, 42px);
+    gap: 10px;
+    width: auto;
+  }
+  .lg-login-wordmark { display: block; }
+  .lg-form-panel > .lg-brand { display: none; }
+}
+@media (max-width: 1024px) {
+  .lg-socials { display: none; }
+}
+@media (max-width: 1024px) and (orientation: portrait) {
+  .lg-login-wordmark { display: none; }
+  .lg-form-panel > .lg-brand { display: flex; }
+}
+
+/* Use the full-desktop heading treatment for every non-phone login layout.
+   The legacy gray pill is intentionally not defined anywhere in this range. */
+@media (min-width: 768px) {
+  .lg-heading h1 {
+    display: block;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    white-space: nowrap;
+    text-align: center;
+    font-family: var(--font);
+    font-weight: 800;
+    letter-spacing: -1.8px;
+    line-height: .98;
+    text-shadow: 0 2px 3px rgba(255, 255, 255, .62);
+  }
+  .lg-heading h1 > span { display: inline; }
+  .lg-heading-accent {
+    margin-top: 0;
+    color: #f0b500;
+  }
+  .lg-heading h1::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    margin: 14px auto 0;
+    border-radius: 999px;
+    background: #f0b500;
+    box-shadow: 0 1px 5px rgba(240, 181, 0, .28);
+  }
+}
+
+/* Custom-width landscape refinement: retain the desktop treatment while
+   keeping the title compact enough for shorter cards. */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .lg-heading h1 {
+    display: block;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    font-family: var(--font);
+    font-size: clamp(26px, 3.4vw, 34px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: .98;
+    text-shadow: 0 2px 3px rgba(255, 255, 255, .62);
+  }
+  .lg-heading h1 > span { display: inline; }
+  .lg-heading-accent {
+    margin-top: 0;
+    color: #f0b500;
+  }
+  .lg-heading h1::after {
+    display: block;
+    margin: 14px auto 0;
+    background: #f0b500;
+  }
+}
+
+/* Short desktop browser windows need extra clearance above the operating
+   system taskbar. Increasing only the shell's bottom inset keeps the
+   wordmark and authentication card moving together without changing their
+   internal layout or introducing page scrolling. */
+@media (min-width: 1025px) and (max-height: 950px) {
+  .lg-shell {
+    padding-bottom: clamp(38px, 5.4vh, 50px);
+  }
+}
+
+/* Taller desktop windows have enough room to lower the complete NU wordmark
+   slightly, keeping the crest and university name clear of the top edge while
+   leaving the authentication card's safe position unchanged. */
+@media (min-width: 1025px) and (min-height: 901px) {
+  .lg-login-wordmark {
+    transform: translateY(clamp(8px, 1.2vh, 14px));
+  }
+}
+
+/* Welcome loader after sign-in, then the dashboard rises in section by section. */
+.login-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+  color: #fff;
+  background: radial-gradient(circle at 50% 38%, #3b4aa8 0%, #2a3373 48%, #1f2657 100%);
+  opacity: 0;
+  transition: opacity .28s ease;
+}
+.login-loader.is-on { opacity: 1; }
+.login-loader.is-off { opacity: 0; transition: opacity .5s ease .05s; pointer-events: none; }
+.ll-orb { position: relative; width: 112px; height: 112px; display: grid; place-items: center; margin-bottom: 10px; }
+.ll-orb img { width: 70px; height: 70px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,.35)); animation: ll-pop .7s cubic-bezier(.2,.9,.3,1.3) both; }
+.ll-ring { position: absolute; inset: 0; border-radius: 50%; border: 3px solid rgba(255,212,28,.18); border-top-color: #ffd41c; animation: ll-spin 1s linear infinite; }
+.ll-ring-2 { inset: 10px; border-color: rgba(255,255,255,.1); border-bottom-color: rgba(255,255,255,.7); animation-duration: 1.5s; animation-direction: reverse; }
+
+/* Keep the two login branding variants mutually exclusive at custom viewport sizes. */
+@media (min-width: 1025px) {
+  .lg-login-wordmark { display: block !important; }
+  .lg-form-panel > .lg-brand { display: none !important; }
+}
+@media (max-width: 1024px) {
+  .lg-login-wordmark { display: none !important; }
+  .lg-form-panel > .lg-brand { display: flex !important; }
+}
+.ll-hello { margin: 0; font-size: clamp(22px, 5vw, 30px); font-weight: 800; letter-spacing: -.4px; animation: ll-rise .6s .15s ease both; }
+.ll-sub { margin: 0; font-size: 15px; color: rgba(255,255,255,.78); animation: ll-rise .6s .3s ease both; }
+.ll-sub::after { content: ''; display: inline-block; width: 1.2em; text-align: left; animation: ll-dots 1.2s steps(4, end) infinite; }
+.ll-bar { width: min(240px, 60vw); height: 5px; margin-top: 12px; border-radius: 99px; background: rgba(255,255,255,.18); overflow: hidden; }
+.ll-bar i { display: block; height: 100%; width: 100%; border-radius: inherit; background: linear-gradient(90deg, #ffd41c, #fff2a8); transform-origin: left; animation: ll-fill 1.5s cubic-bezier(.4,.1,.2,1) both; }
+@keyframes ll-spin { to { transform: rotate(360deg); } }
+@keyframes ll-pop { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: scale(1); } }
+@keyframes ll-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ll-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes ll-dots { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75%, 100% { content: '...'; } }
+@keyframes dash-rise { from { opacity: 0; transform: translateY(18px) scale(.985); } to { opacity: 1; transform: none; } }
+body.is-entering #view > * > * { animation: dash-rise .6s cubic-bezier(.2,.7,.2,1) both; }
+body.is-entering #view > * > *:nth-child(2) { animation-delay: .08s; }
+body.is-entering #view > * > *:nth-child(3) { animation-delay: .16s; }
+body.is-entering #view > * > *:nth-child(4) { animation-delay: .24s; }
+body.is-entering #view > * > *:nth-child(5) { animation-delay: .32s; }
+body.is-entering #view > * > *:nth-child(n+6) { animation-delay: .4s; }
+body.is-entering .kpi > * { animation: dash-rise .55s cubic-bezier(.2,.7,.2,1) both; }
+body.is-entering .kpi > *:nth-child(1) { animation-delay: .22s; }
+body.is-entering .kpi > *:nth-child(2) { animation-delay: .30s; }
+body.is-entering .kpi > *:nth-child(3) { animation-delay: .38s; }
+body.is-entering .kpi > *:nth-child(4) { animation-delay: .46s; }
+body.is-entering .kpi > *:nth-child(n+5) { animation-delay: .54s; }
+@media (prefers-reduced-motion: reduce) {
+  .login-loader *, body.is-entering #view *, body.is-entering .kpi > * { animation: none !important; }
+}

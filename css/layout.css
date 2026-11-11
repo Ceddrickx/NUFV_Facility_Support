@@ -1,0 +1,829 @@
+/* App shell: full-width header, sidebar (light panel / icon rail), main, bottom nav (mobile-first) */
+.app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: var(--topbar-h);
+}
+body.nav-open {
+  overflow: hidden;
+}
+
+/* ---------- Header: solid primary bar, thin yellow line along the bottom ---------- */
+.topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  width: 100%;
+  z-index: calc(var(--z-dropdown) + 1);
+  background: var(--header-bg);
+  color: #fff;
+  border-bottom: 6px solid var(--accent);
+  box-sizing: border-box;
+  min-height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding: calc(var(--s2) - 1.5px) max(var(--s4), var(--safe-x)); /* 1.5px less top and bottom keeps the header the same height with the thicker 6px line */
+  padding-top: calc(var(--s2) - 1.5px + env(safe-area-inset-top));
+}
+.topbar .top-left {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.topbar .top-brand span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.topbar .top-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  color: #fff;
+  text-decoration: none;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.04em;
+  font-size: var(--fs-base);
+  white-space: nowrap;
+  min-width: 0;
+}
+.topbar .top-brand img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex: none;
+}
+.topbar .tools {
+  flex: none;
+  display: flex;
+  gap: var(--s1);
+  align-items: center;
+}
+.topbar .icon-btn {
+  color: #fff;
+  background: transparent;
+  border-color: transparent;
+  position: relative;
+  transition:
+    background var(--dur-1) var(--ease),
+    transform var(--dur-1) var(--ease);
+}
+.topbar .icon-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+.topbar .icon-btn:active {
+  transform: scale(0.94);
+}
+/* On the primary bar the ring is yellow (6.4:1); inside light dropdown panels it is primary again. */
+.topbar :is(a, button, summary):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.topbar .avatar-btn:focus-visible {
+  outline: 0;
+}
+.topbar .avatar-btn:focus-visible .avatar {
+  box-shadow: 0 0 0 2px #fff;
+} /* keyboard focus on the avatar: a white ring, not yellow */
+.topbar .dd-panel :focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -2px;
+}
+.topbar .top-brand {
+  border-radius: var(--r-sm);
+}
+.topbar .top-brand:hover {
+  opacity: 0.9;
+}
+.topbar .hi {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  margin: 0 var(--s1) 0 var(--s2);
+  white-space: nowrap;
+}
+.topbar .avatar-btn {
+  padding: 0;
+}
+.topbar .avatar {
+  width: 36px;
+  height: 36px;
+  font-size: var(--fs-sm);
+  border: 0;
+}
+.topbar .bell-img {
+  width: 1.15em;
+  height: 1.15em;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  display: block;
+}
+.topbar .dd-panel {
+  color: var(--text);
+}
+
+/* ---------- Sidebar: light panel ---------- */
+.sidebar {
+  position: fixed;
+  inset: var(--topbar-h) auto 0 0;
+  width: min(var(--sidebar-w), 86vw);
+  background: var(--surface);
+  color: var(--text);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: var(--s3) var(--s3) 0;
+  transform: translateX(-102%);
+  visibility: hidden;
+  will-change: transform;
+  box-shadow: var(--shadow-drawer); /* static: hidden with the panel via visibility, never animated */
+  transition:
+    transform var(--dur-drawer) var(--ease-drawer),
+    visibility 0s linear var(--dur-drawer);
+  z-index: var(--z-dropdown);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: none; /* U35: no native scrollbar inside the drawer (it still scrolls) */
+}
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+.sidebar.open {
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s;
+}
+/* Focus effect: the page behind the drawer dims and settles back slightly. Only transform and opacity animate. */
+.sidebar-scrim {
+  position: fixed;
+  inset: var(--topbar-h) 0 0 0;
+  z-index: calc(var(--z-dropdown) - 1);
+  background: var(--scrim);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--dur-drawer) var(--ease-drawer),
+    visibility 0s linear var(--dur-drawer);
+}
+.app.sidebar-open .sidebar-scrim {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+/* Small screens: no blur (costly to repaint), a solid scrim instead. */
+@media (max-width: 639px) {
+  .sidebar-scrim {
+    background: var(--scrim-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+.main-wrap {
+  /* Keep large tables at full scale while the navigation changes width. */
+  transform: none;
+  transition: none;
+}
+/* Mobile drawers overlay the page; keep the underlying content at its exact position. */
+@media (max-width: 639px) {
+  .main-wrap,
+  .app.sidebar-open .main-wrap {
+    transform: none;
+    transition: none;
+  }
+}
+.sidebar > nav {
+  padding-top: var(--s2);
+}
+.sidebar > nav {
+  flex: 1;
+}
+.side-foot .system-group .nav a,
+.side-foot .system-group .nav-btn {
+  min-height: 40px;
+  padding-block: var(--s2);
+}
+/* Reset demo data is a footer action, not a destination: quieter, smaller, set apart. */
+.side-foot .nav-btn {
+  min-height: 36px;
+  margin-top: var(--s1);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  border: 1px dashed var(--border);
+}
+.side-foot .nav-btn svg {
+  width: 16px;
+  height: 16px;
+}
+.side-foot .nav-btn:hover {
+  color: var(--text);
+  border-style: solid;
+}
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  min-height: 44px;
+  padding: 8px var(--s3);
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  color: var(--text-muted);
+  font: inherit;
+  font-weight: var(--fw-medium);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition:
+    background var(--dur-1) var(--ease),
+    color var(--dur-1) var(--ease),
+    transform var(--dur-1) var(--ease);
+}
+.nav-btn svg {
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+.nav-btn:hover {
+  background: var(--surface-alt);
+  color: var(--text);
+}
+.nav-btn:active {
+  transform: scale(0.98);
+}
+.nav-btn:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 1px;
+}
+.menu-btn .dots9 {
+  width: 24px;
+  height: 24px;
+}
+
+.side-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.side-search svg {
+  position: absolute;
+  left: 12px;
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.side-search .input {
+  padding-left: 38px;
+  min-height: 42px;
+  background: var(--surface-alt);
+  border-color: transparent;
+  border-radius: var(--r-md);
+}
+.side-search .input:focus {
+  background: var(--surface);
+}
+
+.nav-group {
+  margin-top: var(--s3);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--border);
+}
+.nav-group:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.nav-label {
+  margin: 0 0 var(--s1);
+  padding: 0 var(--s3);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s0);
+}
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  min-height: 44px;
+  padding: 8px var(--s3);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: var(--fw-medium);
+  border-radius: var(--r-md);
+  position: relative;
+  transition:
+    background var(--dur-1) var(--ease),
+    color var(--dur-1) var(--ease),
+    transform var(--dur-1) var(--ease);
+}
+.nav a svg {
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+.nav a .icon,
+.nav-btn .icon {
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+.nav a:hover {
+  background: var(--surface-alt);
+  color: var(--text);
+}
+.nav a:active {
+  transform: scale(0.98);
+}
+.nav a[aria-current='page'] {
+  background: var(--tint);
+  color: var(--nu-blue-text);
+  font-weight: var(--fw-semibold);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.nav a[aria-current='page']:hover {
+  background: var(--tint-strong);
+}
+.nav .count {
+  margin-left: auto;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  padding: 0 8px;
+  font-weight: var(--fw-bold);
+  min-width: 22px;
+  text-align: center;
+}
+
+.side-foot {
+  background: var(--surface);
+  padding: var(--s2) 0 var(--s3);
+  border-top: 1px solid var(--border);
+  margin-top: var(--s3);
+  display: grid;
+  gap: var(--s2);
+}
+
+.side-user {
+  padding: var(--s3);
+  display: flex;
+  gap: var(--s3);
+  align-items: center;
+  background: var(--surface-alt);
+  border-radius: var(--r-md);
+}
+.avatar {
+  object-fit: cover;
+  max-width: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--on-accent);
+  display: grid;
+  place-items: center;
+  font-weight: var(--fw-bold);
+  flex: none;
+}
+.side-user .who {
+  min-width: 0;
+  flex: 1;
+}
+.side-user .who b {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.side-user .who small {
+  color: var(--text-muted);
+}
+.side-user button {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--r-sm);
+  min-height: 36px;
+  min-width: 36px;
+  padding: 0 8px;
+  display: grid;
+  place-items: center;
+  transition:
+    background var(--dur-1) var(--ease),
+    color var(--dur-1) var(--ease);
+}
+.side-user button:hover {
+  background: var(--surface);
+  color: var(--error-text);
+}
+.side-user button:active {
+  transform: scale(0.96);
+}
+
+/* ---------- Main ---------- */
+.main-wrap {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--topbar-h));
+  min-height: calc(100dvh - var(--topbar-h));
+}
+.main {
+  padding: var(--s4);
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  min-width: 0;
+}
+.main:focus {
+  outline: none;
+}
+.page-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s3);
+  margin-bottom: var(--s4);
+}
+.page-head h2.page-title,
+.page-head h1 {
+  margin: 0;
+}
+.app-footer {
+  background: var(--nu-navy);
+  color: #fff;
+  font-size: var(--fs-xs);
+  padding: var(--s3) var(--s4);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.bottom-nav {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: var(--z-bottomnav);
+  background: var(--nu-navy);
+  color: #fff;
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.bottom-nav a,
+.bottom-nav button {
+  flex: 1;
+  min-width: 0;
+  min-height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s0);
+  font-size: var(--fs-xs);
+  color: #fff;
+  text-decoration: none;
+  background: none;
+  border: 0;
+  border-top: 3px solid transparent;
+}
+.bottom-nav a,
+.bottom-nav button {
+  transition: background var(--dur-1) var(--ease);
+}
+.bottom-nav .icon {
+  width: 18px;
+  height: 18px;
+}
+.bottom-nav a:hover,
+.bottom-nav button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.bottom-nav a:active,
+.bottom-nav button:active {
+  background: rgba(255, 255, 255, 0.18);
+}
+.bottom-nav a:focus-visible,
+.bottom-nav button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -4px;
+}
+.bottom-nav [aria-current='page'] {
+  border-top-color: var(--nu-gold);
+  background: var(--nu-navy-light);
+}
+body.has-bottom-nav .main-wrap {
+  padding-bottom: var(--bottom-nav-h);
+}
+.bottom-nav a span,
+.bottom-nav button span {
+  max-width: 100%;
+  padding-inline: var(--s0);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sheet-links {
+  display: grid;
+  gap: var(--s2);
+}
+.sheet-links a {
+  display: flex;
+  gap: var(--s3);
+  align-items: center;
+  min-height: 48px;
+  padding: 0 var(--s3);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.menu-btn {
+  display: inline-grid;
+}
+.desk-only {
+  display: none !important;
+}
+
+/* Grids */
+.grid {
+  display: grid;
+  gap: var(--s4);
+}
+.grid.cards {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.625rem), 1fr));
+}
+.grid.two {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 21.25rem), 1fr));
+}
+.grid.three {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr));
+}
+body.nav-open .chat-fab {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ---------- Desktop rail (>=1024px) ----------
+   Sits under the full-width top bar (which keeps the NU logo). A 64px icon rail that expands to the full sidebar on a deliberate hover or on keyboard focus. The page is pushed over (not covered):
+   the sidebar width and the content offset use the same duration and easing (--side-dur / --side-ease) so they move as one.
+   Below 1024px nothing here applies and the slide-out drawer above is unchanged. Delays live in variables.css. */
+.sidebar .rail-only {
+  display: none;
+}
+.dd-panel.side-fly {
+  position: fixed;
+  right: auto;
+  bottom: auto;
+  min-width: 220px;
+  z-index: calc(var(--z-dropdown) + 3);
+}
+.dd-title {
+  margin: 0;
+  padding: var(--s2) var(--s3) var(--s1);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.dd-who {
+  padding: var(--s2) var(--s3);
+  display: grid;
+}
+.dd-who small {
+  color: var(--text-muted);
+}
+.dd-item[aria-current='page'] {
+  background: var(--tint);
+  color: var(--nu-blue-text);
+  font-weight: var(--fw-semibold);
+}
+.rail-tip {
+  position: fixed;
+  z-index: calc(var(--z-dropdown) + 4);
+  transform: translateY(-50%);
+  pointer-events: none;
+  background: var(--primary-900);
+  color: #fff;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: 1.2;
+  white-space: nowrap;
+  padding: 7px 12px;
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur-1) var(--ease),
+    visibility 0s linear var(--dur-1);
+}
+.rail-tip.on {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: var(--side-tip-delay), 0s;
+}
+
+@media (min-width: 1024px) {
+  .app {
+    --side-w: var(--rail-w);
+  }
+  .app.side-expanded {
+    --side-w: var(--sidebar-w);
+  }
+  .sidebar {
+    inset: var(--topbar-h) auto 0 var(--safe-x);
+    width: var(--side-w);
+    padding: var(--s3) var(--s3) 0;
+    transform: none;
+    visibility: visible;
+    box-shadow: none;
+    will-change: width;
+    transition: width var(--side-dur) var(--side-ease);
+    z-index: calc(var(--z-dropdown) + 2);
+  }
+  .sidebar-scrim {
+    display: none;
+  }
+  .app.sidebar-open .main-wrap {
+    transform: none;
+  }
+  .main-wrap {
+    margin-left: calc(var(--side-w) + var(--safe-x));
+    padding-right: var(--safe-x);
+    transition: margin-left var(--side-dur) var(--side-ease);
+  }
+  /* Expanding the rail otherwise reflows every ticket row on each frame.
+     Switch this data-heavy view immediately so opening navigation stays smooth. */
+  .app:has(table[data-testid='ticket-table']) .sidebar,
+  .app:has(table[data-testid='ticket-table']) .main-wrap {
+    transition-duration: 0ms;
+  }
+  .app.side-anim .main-wrap {
+    overflow-x: clip;
+  }
+  .app:not(.side-expanded) .sidebar .rail-only {
+    display: block;
+  }
+
+  /* Labels fade; they stay in the DOM and keep their size so nothing wraps or jumps while the width animates. */
+  .sidebar .lbl,
+  .sidebar .nav-label,
+  .side-user .who,
+  .side-user [data-act='logout'] {
+    white-space: nowrap;
+    transition: opacity var(--side-dur) var(--side-ease);
+  }
+  .app:not(.side-expanded) .sidebar :is(.lbl, .nav-label, .who, [data-act='logout']) {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .nav-label {
+    height: 16px;
+    line-height: 16px;
+    overflow: hidden;
+    margin-bottom: 2px;
+  }
+  .nav-group {
+    margin-top: var(--s2);
+    padding-top: var(--s2);
+  }
+  .nav-group:first-child {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  .app:not(.side-expanded) .settings-group .nav > li:not(.rail-only) {
+    display: none;
+  }
+
+  /* Icons sit in a fixed column, so they never move between the two states. */
+  .sidebar .nav a,
+  .sidebar .nav-btn {
+    padding-inline: 8px;
+    gap: 12px;
+    white-space: nowrap;
+    min-height: 48px;
+  }
+  .sidebar .nav a :is(svg, .icon),
+  .sidebar .nav-btn :is(svg, .icon) {
+    width: 24px;
+    height: 24px;
+  }
+  .side-foot .nav-btn {
+    padding-inline: 11px;
+  }
+  .side-foot .nav-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+  .nav-btn[aria-current] {
+    background: var(--tint);
+    color: var(--nu-blue-text);
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+  .sidebar .nav a .count {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+  }
+  .app:not(.side-expanded) .sidebar .nav a .count {
+    top: 6px;
+    right: 6px;
+    transform: none;
+    min-width: 0;
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    font-size: 0;
+    box-sizing: content-box;
+    border: 2px solid var(--surface);
+  }
+
+  .side-search svg {
+    left: 11px;
+    width: 20px;
+    height: 20px;
+    z-index: 1;
+  }
+  .side-search .input {
+    padding-left: 42px;
+    width: 100%;
+    white-space: nowrap;
+  }
+  .app:not(.side-expanded) .side-search .input {
+    padding-inline: 0;
+    color: transparent;
+    cursor: pointer;
+  }
+  .app:not(.side-expanded) .side-search .input::placeholder {
+    color: transparent;
+  }
+  .app:not(.side-expanded) .side-search .input::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  .side-foot {
+    margin-top: var(--s2);
+  }
+  .side-user {
+    position: relative;
+    padding: 8px 3px;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .side-user .avatar {
+    width: 34px;
+    height: 34px;
+    font-size: var(--fs-sm);
+  }
+  .side-user .rail-user-btn {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    border-radius: var(--r-md);
+    background: transparent;
+    cursor: pointer;
+  }
+  .side-user .rail-user-btn:hover {
+    background: transparent;
+  }
+}
+
+/* Large-display overscan keeps the content inset, but the collapsed rail
+   itself stays flush with the viewport edge. Hover, focus, and the 3x3 menu
+   continue to control expansion. */
+@media (min-width: 1920px) {
+  .sidebar {
+    left: 0;
+  }
+}
+@media (min-width: 1024px) and (pointer: coarse) {
+  .sidebar .nav a,
+  .sidebar .nav-btn {
+    min-height: 44px;
+  }
+}

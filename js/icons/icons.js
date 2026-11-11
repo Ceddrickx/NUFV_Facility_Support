@@ -1,0 +1,101 @@
+/* Inline SVG icon set (stroke icons, 24x24). Usage: App.icon('check', 'extra-class') */
+(function () {
+  const App = (window.App = window.App || {});
+  const P = {
+    home: 'M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z',
+    plus: 'M12 5v14M5 12h14',
+    ticket:
+      'M3 9a2 2 0 0 0 0 6v3a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-3a2 2 0 0 1 0-6V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1z M14 5v2 M14 11v2 M14 17v2',
+    calendar: 'M4 6h16v14H4z M4 10h16 M8 3v4 M16 3v4',
+    bell: 'M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z M10 21h4',
+    user: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4 21a8 8 0 0 1 16 0',
+    users: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M2 21a7 7 0 0 1 14 0 M17 4a4 4 0 0 1 0 7 M22 21a7 7 0 0 0-4-6',
+    pin: 'M12 21s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
+    wrench: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z',
+    clock: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M12 7v5l3 2',
+    check: 'M5 12l5 5 9-10',
+    check2: 'M1 12l5 5 8-10 M9 16l2 1 10-12',
+    alert: 'M12 3l10 18H2z M12 10v5 M12 18v.01',
+    arrowup: 'M12 19V5 M5 12l7-7 7 7',
+    arrowdown: 'M12 5v14 M5 12l7 7 7-7',
+    minus: 'M5 12h14',
+    rotate: 'M3 12a9 9 0 1 0 3-6.7 M3 4v5h5',
+    alarm: 'M12 21a8 8 0 1 0 0-16 8 8 0 0 0 0 16z M12 9v4l2 2 M4 3l3 2 M20 3l-3 2',
+    search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M21 21l-5-5',
+    menu: 'M4 6h16M4 12h16M4 18h16',
+    x: 'M6 6l12 12M18 6L6 18',
+    sun: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M12 2v2 M12 20v2 M4 12H2 M22 12h-2 M5 5l1.5 1.5 M17.5 17.5L19 19 M5 19l1.5-1.5 M17.5 6.5L19 5',
+    moon: 'M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z',
+    monitor: 'M3 4h18v12H3z M8 21h8 M12 16v5',
+    settings:
+      'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3h-4l-.4 2.7a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.7h4l.4-2.7a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z',
+    chart: 'M4 20V4 M4 20h16 M8 16v-5 M12 16V8 M16 16v-8',
+    file: 'M6 3h8l5 5v13H6z M14 3v5h5 M9 13h6 M9 17h6',
+    report: 'M6 3h8l5 5v13H6z M14 3v5h5 M9 17v-3 M12 17v-6 M15 17v-5',
+    camera: 'M3 8h4l2-3h6l2 3h4v12H3z M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
+    video: 'M3 6h12v12H3z M15 10l6-3v10l-6-3',
+    image: 'M3 4h18v16H3z M8 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 16l-6-6-9 10',
+    upload: 'M12 16V4 M6 10l6-6 6 6 M4 20h16',
+    download: 'M12 4v12 M6 10l6 6 6-6 M4 20h16',
+    qr: 'M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h3v3h-3z M20 14v1 M14 20h2 M19 18v3h2',
+    wifi: 'M2 9a15 15 0 0 1 20 0 M5 12.5a10 10 0 0 1 14 0 M8.5 16a5 5 0 0 1 7 0 M12 20v.01',
+    mouse: 'M12 3a6 6 0 0 0-6 6v6a6 6 0 0 0 12 0V9a6 6 0 0 0-6-6z M12 3v7',
+    keyboard: 'M2 6h20v12H2z M6 10h.01 M10 10h.01 M14 10h.01 M18 10h.01 M7 14h10',
+    key: 'M15 9a5 5 0 1 0-4 4.9L12 16h2v2h2v2h3v-3l-5-5.2z',
+    mail: 'M3 5h18v14H3z M3 6l9 7 9-7',
+    zap: 'M13 2L4 14h7l-1 8 9-12h-7z',
+    snow: 'M12 2v20 M3 7l18 10 M21 7L3 17 M9 4l3 2 3-2 M9 20l3-2 3 2',
+    bulb: 'M9 18h6 M10 21h4 M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z',
+    droplet: 'M12 3s7 7 7 12a7 7 0 0 1-14 0c0-5 7-12 7-12z',
+    chair: 'M7 3h10v8H7z M5 11h14v3H5z M7 14v7 M17 14v7',
+    projector: 'M3 8h18v8H3z M7 12a2 2 0 1 0 4 0 2 2 0 0 0-4 0 M6 19v-3 M18 19v-3',
+    help: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7 M12 17v.01',
+    chat: 'M4 5h16v11H9l-5 4z',
+    assistant: 'M4 5h13a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H9l-5 3v-3.8A3 3 0 0 1 2 13V8a3 3 0 0 1 2-3z M19 2l.8 2.2L22 5l-2.2.8L19 8l-.8-2.2L16 5l2.2-.8z',
+    send: 'M3 11l18-8-8 18-2-8z',
+    power: 'M12 3v9 M6.3 6.3a8 8 0 1 0 11.4 0',
+    lock: 'M5 11h14v10H5z M8 11V7a4 4 0 0 1 8 0v4',
+    unlock: 'M5 11h14v10H5z M8 11V7a4 4 0 0 1 7-2.6',
+    refresh: 'M20 11a8 8 0 0 0-14-4 M4 4v4h4 M4 13a8 8 0 0 0 14 4 M20 20v-4h-4',
+    cpu: 'M6 6h12v12H6z M9 9h6v6H9z M9 2v4 M15 2v4 M9 18v4 M15 18v4 M2 9h4 M2 15h4 M18 9h4 M18 15h4',
+    building: 'M5 21V3h10v18 M15 9h4v12 M9 7h2 M9 11h2 M9 15h2 M3 21h18',
+    clipboard: 'M9 4h6v3H9z M7 5H5v16h14V5h-2 M9 12h6 M9 16h6',
+    history: 'M3 12a9 9 0 1 0 3-6.7 M3 4v5h5 M12 8v4l3 2',
+    shield: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z',
+    logout: 'M9 4H4v16h5 M16 8l4 4-4 4 M20 12H9',
+    more: 'M5 12h.01 M12 12h.01 M19 12h.01',
+    arrowleft: 'M19 12H5 M12 5l-7 7 7 7',
+    chevl: 'M15 5l-7 7 7 7',
+    chevr: 'M9 5l7 7-7 7',
+    chevd: 'M5 9l7 7 7-7',
+    trash: 'M4 7h16 M9 7V4h6v3 M6 7l1 14h10l1-14',
+    eye: 'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+    printer: 'M7 8V3h10v5 M5 8h14v9h-3v4H8v-4H5z',
+    info: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M12 11v6 M12 7.5v.01',
+    flag: 'M5 21V4 M5 4h12l-2 4 2 4H5',
+    repeat: 'M17 2l4 4-4 4 M3 11V9a3 3 0 0 1 3-3h15 M7 22l-4-4 4-4 M21 13v2a3 3 0 0 1-3 3H3',
+    layers: 'M12 3l9 5-9 5-9-5z M3 13l9 5 9-5',
+    filter: 'M3 5h18l-7 8v6l-4 2v-8z',
+    circle: 'M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z',
+    dot: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
+    dotcheck: 'M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z M8.5 12l2.5 2.5 4.5-5',
+    slashdot: 'M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z M6.3 17.7L17.7 6.3',
+    edit: 'M4 20h4L19 9l-4-4L4 16z',
+    sparkle: 'M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z',
+    table: 'M3 5h18v14H3z M3 10h18 M9 5v14',
+    list: 'M8 6h13 M8 12h13 M8 18h13 M3 6h.01 M3 12h.01 M3 18h.01',
+    grid: 'M3 3h8v8H3z M13 3h8v8h-8z M3 13h8v8H3z M13 13h8v8h-8z',
+    globe: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M3 12h18 M12 3c3 3 3 15 0 18 M12 3c-3 3-3 15 0 18',
+  };
+  const FILLED = { dot: 1 };
+  // 3x3 dot launcher (filled circles), used by the sidebar menu button.
+  App.dotsIcon = function () {
+    const c = [5, 12, 19];
+    return `<svg class="icon dots9" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor">${c.map((y) => c.map((x) => `<circle cx="${x}" cy="${y}" r="2.35"/>`).join('')).join('')}</svg>`;
+  };
+  App.icon = function (name, cls) {
+    if (App.iconImages && App.iconImages[name]) return `<span class="icon icon-img ic-${name} ${cls || ''}" aria-hidden="true"></span>`;
+    const d = P[name] || P.help;
+    return `<svg class="icon ${cls || ''}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="${FILLED[name] ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
+  };
+})();

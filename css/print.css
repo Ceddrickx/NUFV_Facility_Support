@@ -1,0 +1,76 @@
+/* Print: Analytics and QR labels. Always prints in the light theme. */
+@media print {
+  :root {
+    --bg-app: #fff;
+    --surface: #fff;
+    --text: #000;
+    --text-muted: #333;
+    --border: #999;
+    --surface-alt: #f2f2f2;
+    color-scheme: light;
+  }
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+  .sidebar,
+  .sidebar-scrim,
+  .rail-tip,
+  #side-pop,
+  .topbar,
+  .bottom-nav,
+  .chat-fab,
+  .chat-panel,
+  .toasts,
+  .no-print,
+  .app-footer,
+  .modal-backdrop .no-print {
+    display: none !important;
+  }
+  .main-wrap {
+    margin: 0 !important;
+  }
+  .main {
+    padding: 0;
+    max-width: none;
+  }
+  .card {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .table-wrap {
+    overflow: visible;
+    border: 0;
+  }
+  .tbl th {
+    background: #eee !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+  body.printing-qr .main > *:not(.print-qr-area) {
+    display: none !important;
+  }
+  body.printing-qr #modal-root,
+  body.printing-qr #root > *:not(.print-qr-area) {
+    display: none !important;
+  }
+}
+.print-only {
+  display: none;
+}
+.print-header {
+  border-bottom: 3px solid #35408e;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+}
+.print-header h1 {
+  margin: 0;
+}

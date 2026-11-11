@@ -1,0 +1,230 @@
+/* Design tokens. The system is light-only. */
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/inter-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* Palette: Primary #35408e, Accent #ffd41c, Background #fcfcfc. Red/green/orange stay only for status meaning. */
+:root {
+  --primary: #35408e;
+  --primary-700: #2a3373;
+  --primary-900: #1f2657;
+  --primary-100: #dde1f3;
+  --primary-50: #eef0f9;
+  --accent: #ffd41c;
+  --accent-600: #e6bd00;
+  --on-accent: #1b1b1b;
+
+  /* Legacy names kept as aliases so existing rules pick up the new palette. */
+  --nu-navy: var(--primary-700);
+  --nu-navy-light: var(--primary);
+  --nu-gold: var(--accent);
+  --nu-blue: var(--primary);
+  --nu-blue-text: var(--primary);
+  --bg-app: #fcfcfc;
+  --bg-header-alt: #f1f2f8;
+  --surface: #ffffff;
+  --surface-alt: #f3f4fa;
+  --text: #1f2233;
+  --text-muted: #5a5f73;
+  --border: #dcdeea;
+  --focus: var(--primary);
+  --header-bg: var(--primary);
+  --field-border: #7b8098;
+  --tint: var(--primary-50);
+  --tint-strong: var(--primary-100);
+
+  --success: #3d7352;
+  --success-text: #3d7352;
+  --error: #b94a48;
+  /* Status pills: the ONE source for pill colours. Badges and chart slices/legends read these. White text on every pill. */
+  --pill-text: #ffffff;
+  --pill-pending: #d89807;
+  --pill-assigned: #2563eb;
+  --pill-inprogress: #1e40af;
+  --pill-reopened: #c2410c;
+  --pill-resolved: #15803d;
+  --pill-closed: #145a32;
+  --error-text: #b94a48;
+  --warning: #c9823a;
+  --warning-text: #9c5719;
+  --info: var(--primary);
+  --info-text: var(--primary);
+  --in-progress: #5b66b5; /* mid tint of primary, white text 5.2:1 */
+  --on-in-progress: #ffffff;
+  --neutral-chart: #8a8d93;
+
+  --shadow: 0 2px 8px rgba(31, 38, 87, 0.1);
+  --shadow-md: 0 4px 14px rgba(31, 38, 87, 0.14);
+  --shadow-lg: 0 10px 40px rgba(31, 38, 87, 0.32);
+  --shadow-drawer: 8px 0 32px rgba(31, 38, 87, 0.28);
+  --scrim: rgba(20, 24, 56, 0.55); /* shared by drawer and modal */
+  --scrim-solid: rgba(20, 24, 56, 0.72); /* small screens: no blur, so a solid scrim */
+  --surface-dark: var(--primary-900);
+  --on-dark: var(--primary-100);
+  --track: var(--field-border);
+
+  /* Chart series: read by js/components/chartCard.js through getComputedStyle. */
+  --chart-pending: var(--pill-pending);
+  --chart-assigned: var(--pill-assigned);
+  --chart-inprogress: var(--pill-inprogress);
+  --chart-resolved: var(--pill-resolved);
+  --chart-closed: var(--pill-closed);
+  --chart-reopened: var(--pill-reopened);
+  --chart-bar: #7d88cc;
+  --chart-bar-top: var(--primary);
+  --chart-line: var(--primary);
+  --chart-fill: rgba(53, 64, 142, 0.14);
+  --chart-neutral: var(--neutral-chart);
+  --r-xs: 0.25rem;
+  --r-sm: 0.375rem;
+  --r-md: 0.5rem;
+  --r-lg: 0.75rem;
+  --r-modal: 0.875rem;
+
+  --s0: 0.125rem;
+  --s1: 0.25rem;
+  --s2: 0.5rem;
+  --s3: 0.75rem;
+  --s4: 1rem;
+  --s5: 1.5rem;
+  --s6: 2rem;
+  --s7: 3rem;
+  --s8: 4rem;
+
+  /* Type: fixed rem scale (12px minimum, ratio about 1.15-1.25), weights, line heights, tracking. */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.375rem;
+  --fs-xl: 1.75rem;
+  --fs-2xl: 2rem;
+  --fs-h1: clamp(1.5rem, 1.25rem + 1vw, 1.875rem);
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --lh-tight: 1.2;
+  --lh-snug: 1.35;
+  --lh-base: 1.5;
+  --ls-caps: 0.06em;
+
+  /* Reading widths */
+  --w-narrow: 55rem;
+  --w-detail: 75rem;
+  --measure: 70ch;
+
+  /* Motion: one easing curve, three durations. Only opacity and transform are animated. */
+  --dur-1: 150ms;
+  --dur-2: 200ms;
+  --dur-3: 300ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur-drawer: 280ms;
+  --ease-drawer: cubic-bezier(0.22, 0.8, 0.24, 1);
+
+  --z-bottomnav: 10;
+  --z-sticky: 20;
+  --z-dropdown: 30;
+  --z-modal: 40;
+  --z-chat: 45;
+  --z-toast: 50;
+
+  --sidebar-w: 16.5rem;
+  --rail-w: 4rem;
+  /* Desktop sidebar rail: tune hover-intent and reflow here (JS reads the delays from these). */
+  --side-open-delay: 600ms;
+  --side-close-delay: 300ms;
+  --side-dur: 280ms;
+  --side-ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+  --side-tip-delay: 120ms;
+  --topbar-h: 4rem;
+  --bottom-nav-h: calc(
+    56px + env(safe-area-inset-bottom)
+  ); /* main.js overwrites this with the nav's measured height so nothing can leave a gap above it */
+  /* ---- Responsive layout tokens (single source of truth, see RESPONSIVE_RULES.md) ----
+     Breakpoints (CSS cannot read variables inside @media, so ONLY these values may appear in a media query):
+       360 / 480 / 640 / 768 / 1024 / 1200 / 1920 / 2560  (max-width queries use the value minus 1px)
+     Spacing, radius, shell sizes and reading widths are rem so everything scales together with the fluid root size in base.css. */
+  --content-max: 150rem; /* widest the page content may grow; wider screens add columns instead of stretching */
+  --safe-x: 0px; /* TV overscan safe margin; set at 1920px and wider below */
+  --tap-min: 44px; /* minimum touch target */
+  --font: 'Inter', Arial, system-ui, sans-serif;
+  color-scheme: light;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes rise-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@keyframes sheet-drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes sheet-drop-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+/* Reduced-motion rules live in one place: base.css. */
+
+/* TV / large-display safe margin: keeps the header, rail and content off the screen edges (overscan). */
+@media (min-width: 1920px) {
+  :root {
+    --safe-x: 2.5vw;
+  }
+}
+
+/* Interaction colours (hover = lighter/darker shift, press = deeper). Success = go/confirm, error = cancel/destructive. */
+:root {
+  --success-hover: #2f5c42;
+  --success-press: #214532;
+  --error-hover: #a33a38;
+  --error-press: #832c2a;
+  --accent-press: #c9a000;
+}

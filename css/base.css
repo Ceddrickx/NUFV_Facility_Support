@@ -1,0 +1,206 @@
+/* Reset, typography, utilities */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  /* Fluid root: 100% (16px) on laptops, grows on big/ultrawide/TV screens. Uses the smaller of width and 16:9-equivalent height so ultrawides do not over-scale. */
+  font-size: clamp(100%, min(0.9375vw, 1.6667vh), 3rem);
+  -webkit-text-size-adjust: 100%;
+  scrollbar-gutter: stable;
+}
+/* The sign-in page rarely scrolls: do not reserve a blank scrollbar strip down its right edge. */
+html:has(.lg-shell) {
+  scrollbar-gutter: auto;
+}
+/* Page headings take programmatic focus after a route change (screen readers); never draw a ring for that. */
+.page-title:focus:not(:focus-visible),
+h1[tabindex='-1']:focus,
+h2[tabindex='-1']:focus {
+  outline: none;
+}
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  font-weight: var(--fw-regular);
+  color: var(--text);
+  background: var(--bg-app);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-wrap: anywhere;
+}
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 var(--s2);
+  line-height: var(--lh-tight);
+  text-wrap: balance;
+}
+h1 {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.01em;
+}
+h2 {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+}
+h3 {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+}
+h4 {
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
+}
+p {
+  margin: 0 0 var(--s3);
+}
+.prose {
+  max-width: 70ch;
+}
+p.muted,
+.card > p,
+.help {
+  max-width: 70ch;
+}
+a {
+  color: var(--nu-blue-text);
+}
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+ul {
+  padding-left: 1.2em;
+  margin: 0 0 var(--s3);
+}
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+[hidden] {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  z-index: 100;
+  background: var(--nu-blue);
+  color: #fff;
+  padding: var(--s3) 16px;
+  border-radius: var(--r-sm);
+}
+.skip-link:focus {
+  top: 8px;
+}
+.muted {
+  color: var(--text-muted);
+}
+.small {
+  font-size: var(--fs-sm);
+}
+.row {
+  display: flex;
+  gap: var(--s3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.row.between {
+  justify-content: space-between;
+}
+.stack > * + * {
+  margin-top: var(--s4);
+}
+.stack-s3 > * + * {
+  margin-top: var(--s3);
+}
+.stack-s5 > * + * {
+  margin-top: var(--s5);
+}
+.grow {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.mono,
+.num,
+.counter,
+.count,
+.badge,
+.badge-n,
+.badge-dot,
+.result-count,
+.tbl td {
+  font-variant-numeric: tabular-nums;
+}
+.nowrap {
+  white-space: nowrap;
+}
+.icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  vertical-align: -0.2em;
+}
+
+/* Single reduced-motion block: no transitions, no loops (blink, shimmer, typing), no drawer scale/filter. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+    --dur-drawer: 0ms;
+    --side-dur: 0ms;
+    --side-tip-delay: 0ms;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  .typing i,
+  .skeleton {
+    animation: none !important;
+  }
+  html .app.sidebar-open .main-wrap {
+    transform: none;
+  }
+}

@@ -1,0 +1,642 @@
+/* Mobile-first breakpoints. Layout follows the live viewport width, never the device. */
+
+/* Phones: modals are bottom sheets; chatbot is full screen (default styles above) */
+@media (max-width: 639px) {
+  /* Give the report description enough visible space for a 100-character
+     response on phone-sized viewports. */
+  .main:has([data-wiz]) #rp-desc {
+    min-height: 144px;
+    line-height: 1.45;
+  }
+
+  .viewfinder {
+    width: min(100%, 360px);
+    border-radius: 18px;
+  }
+  .cam-prompt {
+    padding: 22px;
+  }
+  .cam-prompt-icon-wrap {
+    border-radius: 16px;
+  }
+  .scanner-form-spacer {
+    height: 4px;
+  }
+  .main:has([data-wiz]) .category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s4);
+  }
+  .main:has([data-wiz]) .category-grid:has(.choice:only-child) .choice {
+    grid-column: 1 / -1;
+  }
+  .main:has([data-wiz]) .cat-group {
+    margin-top: var(--s4);
+    margin-bottom: var(--s2);
+    letter-spacing: .04em;
+  }
+  /* Give the mobile report wizard more breathing room without changing
+     dashboard cards or other choice grids. */
+  .main:has([data-wiz]) .choice-grid {
+    gap: var(--s4);
+  }
+  .main:has([data-wiz]) .choice {
+    min-height: 112px;
+    padding: var(--s4) var(--s3);
+    line-height: 1.35;
+  }
+  .main:has([data-wiz]) section[data-step] > h2 {
+    line-height: 1.25;
+    margin-bottom: var(--s4);
+  }
+  .main:has([data-wiz]) .sticky-actions {
+    gap: var(--s3);
+    padding-inline: max(var(--s4), env(safe-area-inset-left)) max(var(--s4), env(safe-area-inset-right));
+  }
+  .tbl-responsive thead {
+    display: none;
+  }
+  .tbl-responsive,
+  .tbl-responsive tbody,
+  .tbl-responsive tr,
+  .tbl-responsive td {
+    display: block;
+    width: 100%;
+  }
+  .tbl-responsive tr {
+    border-bottom: 2px solid var(--border);
+    padding: 8px 4px;
+  }
+  .tbl-responsive td {
+    border: 0;
+    padding: var(--s1) 8px;
+  }
+  /* All responsive tables use a label/value row on phones. Without this,
+     the desktop table-cell sizing can squeeze assignment values into a
+     one-character column. */
+  .tbl-responsive td[data-label] {
+    display: flex !important;
+    width: 100% !important;
+    min-width: 0;
+    flex-wrap: nowrap;
+    column-gap: var(--s3);
+    align-items: flex-start;
+    padding: 10px 8px;
+    line-height: 1.35;
+  }
+  .tbl-responsive td[data-label]::before {
+    content: attr(data-label) ': ';
+    font-weight: var(--fw-semibold);
+    color: var(--text-muted);
+    flex: 0 0 110px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .tbl-responsive td .tbl-value {
+    flex: 1 1 auto;
+    width: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .tbl-responsive td.actions .tbl-value {
+    display: flex !important;
+    width: auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  /* Desktop ticket-column percentages must not shrink mobile values. */
+  table[data-testid='ticket-table'].tbl-responsive,
+  table[data-testid='ticket-table'].tbl-responsive tbody,
+  table[data-testid='ticket-table'].tbl-responsive tr,
+  table[data-testid='ticket-table'].tbl-responsive td,
+  table[data-testid='ticket-table'].tbl-responsive td:nth-child(n) {
+    width: 100% !important;
+    min-width: 0;
+  }
+  table[data-testid='ticket-table'].tbl-responsive td[data-label] {
+    display: flex !important;
+    flex-wrap: nowrap;
+    column-gap: var(--s3);
+    align-items: start;
+    padding: 10px 8px;
+    line-height: 1.35;
+  }
+  table[data-testid='ticket-table'].tbl-responsive td[data-label]::before {
+    content: attr(data-label) ': ';
+    font-weight: var(--fw-semibold);
+    color: var(--text-muted);
+    flex: 0 0 88px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  table[data-testid='ticket-table'].tbl-responsive td .tbl-value {
+    flex: 1 1 auto;
+    width: 0;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  table[data-testid='ticket-table'].tbl-responsive td.ticket-id .tbl-value,
+  table[data-testid='ticket-table'].tbl-responsive td.ticket-id .tbl-value a {
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  table[data-testid='ticket-table'].tbl-responsive td .badge-group {
+    max-width: 100%;
+  }
+  table[data-testid='ticket-table'].tbl-responsive td.actions .tbl-value {
+    display: flex !important;
+    width: auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  table[data-testid='ticket-table'].tbl-responsive td.actions .btn + .btn {
+    margin-left: 0;
+  }
+  .tbl-responsive .actions {
+    white-space: normal;
+  }
+  .stat-num {
+    font-size: var(--fs-xl);
+  }
+  .stat {
+    min-height: 116px;
+    padding: var(--s3) var(--s4) var(--s4);
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    column-gap: var(--s2);
+    padding-inline: var(--s3);
+  }
+  .stat-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .stat-icon .icon {
+    width: 1.5em;
+    height: 1.5em;
+  }
+  .stat-label {
+    font-size: var(--fs-xs);
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
+  .cal-grid.month .cal-cell {
+    min-height: 54px;
+  }
+  .cal-grid.month .ev {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .main:has([data-wiz]) #rp-desc {
+    min-height: 156px;
+  }
+
+  .main:has([data-wiz]) .field-foot {
+    display: block;
+  }
+
+  .main:has([data-wiz]) .field-foot .counter {
+    text-align: left;
+  }
+
+  .main:has([data-wiz]) .choice-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  .main:has([data-wiz]) #rp-desc {
+    min-height: 128px;
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 767px) {
+  .recurring-actions .btn {
+    flex-basis: 140px;
+  }
+  .chart-card {
+    align-self: start;
+  }
+  .data-table-scroll {
+    max-height: none;
+    overflow: visible;
+  }
+  .dashboard-actions {
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .dashboard-actions > .btn {
+    flex: 0 1 auto;
+  }
+}
+@media (max-width: 479px) {
+  .topbar {
+    gap: var(--s1);
+    padding-inline: var(--s3);
+  }
+  .topbar .hi {
+    display: none;
+  }
+  .topbar .top-brand {
+    font-size: var(--fs-sm);
+    gap: var(--s2);
+  }
+  .grid.kpi {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grid.kpi > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+  .kv {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .kv dt {
+    margin-top: var(--s2);
+  }
+}
+@media (max-width: 639px) {
+  .filter-toggle {
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+  .filter-bar:not(.open) .filter-more {
+    display: none;
+  }
+  .filter-bar .search {
+    flex: 1 1 160px;
+  }
+  .my-tickets-panel .row.between {
+    align-items: center;
+    gap: var(--s3);
+  }
+  .my-tickets-panel .seg {
+    flex: 0 0 auto;
+  }
+  .my-tickets-panel .filter-bar {
+    align-items: stretch;
+  }
+  .my-tickets-panel .filter-bar .search {
+    min-width: 0;
+  }
+  .my-tickets-panel .filter-bar.open .filter-more {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    flex: 0 0 100% !important;
+    order: 3;
+    gap: var(--s2);
+  }
+  .my-tickets-panel .filter-bar.open .filter-more > div {
+    width: 100%;
+    min-width: 0;
+  }
+  .my-tickets-panel .ticket-card {
+    padding: var(--s4);
+  }
+  .my-tickets-panel .ticket-card .ttl {
+    font-size: var(--fs-base);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+  .my-tickets-panel .ticket-card .meta {
+    gap: 6px 12px;
+  }
+  .page[data-page='myTickets'] .page-head {
+    align-items: flex-start;
+  }
+  .page[data-page='myTickets'] .page-head .grow {
+    min-width: 0;
+  }
+  .page[data-page='myTickets'] .page-head .btn {
+    min-height: 44px;
+  }
+  body:has(.sticky-actions:not([hidden])) .chat-fab {
+    bottom: max(calc(142px + env(safe-area-inset-bottom)), calc(var(--fab-lift, 0px) + var(--s4)));
+  }
+}
+@media (max-width: 360px) {
+  .page[data-page='myTickets'] .page-head .row,
+  .page[data-page='myTickets'] .page-head .row .btn {
+    width: 100%;
+  }
+  .page[data-page='myTickets'] .page-head .row .btn {
+    justify-content: center;
+  }
+  .my-tickets-panel .filter-bar .search,
+  .my-tickets-panel .filter-toggle {
+    flex-basis: 100%;
+    width: 100%;
+  }
+  .my-tickets-panel .filter-toggle {
+    justify-content: center;
+  }
+}
+@media (min-width: 480px) {
+  .main {
+    padding: var(--s5);
+  }
+}
+
+/* Tablet */
+@media (min-width: 640px) {
+  .modal-backdrop {
+    align-items: center;
+    padding: var(--s4);
+  }
+  .modal {
+    width: min(100%, 620px);
+    max-height: 90dvh;
+    border-radius: var(--r-modal);
+  }
+  .modal.wide {
+    width: min(100%, 860px);
+  }
+  .toasts {
+    left: auto;
+    right: var(--s4);
+    bottom: auto;
+    top: calc(var(--topbar-h) + 8px);
+    width: min(380px, 92vw);
+  }
+  .stepper {
+    display: flex;
+  }
+  .step-compact {
+    display: none;
+  }
+  .sticky-actions {
+    position: static;
+    border: 0;
+    margin: var(--s4) 0 0;
+    padding: 0;
+  }
+  .dd-panel.sheet {
+    position: fixed;
+    left: auto;
+    right: 12px;
+    top: var(--topbar-h);
+    width: min(340px, calc(100% - 24px));
+    max-width: calc(100% - 24px);
+    border-radius: 0 0 var(--r-md) var(--r-md);
+  }
+  .chat-panel {
+    inset: auto var(--s4) var(--s4) auto;
+    width: 380px;
+    height: min(560px, calc(100dvh - 32px));
+    border-radius: var(--r-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .chat-fab {
+    bottom: max(var(--s4), calc(var(--fab-lift, 0px) + var(--s4)));
+  }
+  .detail-grid.two {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Two-column detail layout and card grids from 900px */
+@media (min-width: 1024px) {
+  .detail-grid.main-side {
+    grid-template-columns: minmax(0, 2fr) minmax(16.25rem, 1fr);
+  }
+  .grid.cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grid.cols-2 > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* The sidebar is a slide-out drawer at every width; laptops just get roomier layouts */
+@media (min-width: 1024px) {
+  .desk-only {
+    display: inline-flex !important;
+  }
+  .topbar {
+    padding-inline: var(--s5);
+  }
+}
+
+/* Hidden bottom nav on tablet+ (sidebar replaces it) */
+@media (min-width: 640px) {
+  .bottom-nav {
+    display: none;
+  }
+  body.has-bottom-nav .main-wrap {
+    padding-bottom: 0;
+  }
+}
+
+/* Touch devices: 44 px targets, no hover-only actions */
+@media (pointer: coarse) {
+  .btn.sm,
+  .seg button {
+    min-height: 44px;
+  }
+  .chip button {
+    width: 32px;
+    height: 32px;
+    position: relative;
+  }
+  .chip button::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+  } /* 44px hit area, same look */
+  .toast button {
+    width: 44px;
+    height: 44px;
+    margin: -8px -8px -8px 0;
+  }
+  .side-user button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .side-foot .system-group .nav a,
+  .side-foot .system-group .nav-btn,
+  .side-foot .nav-btn {
+    min-height: 44px;
+  }
+  .faq summary,
+  details.data-table summary {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .switch input {
+    inset: -9px -4px;
+    width: calc(100% + 8px);
+    height: calc(100% + 18px);
+  }
+  .cal-cell .dn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .input,
+  .select,
+  .side-search .input {
+    min-height: 44px;
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .ticket-card:hover,
+  a.stat:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* Landscape phones and short windows */
+@media (max-height: 500px) {
+  :root {
+    --topbar-h: 48px;
+    --bottom-nav-h: calc(44px + env(safe-area-inset-bottom));
+  }
+  .bottom-nav a,
+  .bottom-nav button {
+    min-height: 44px;
+    flex-direction: row;
+    gap: var(--s2);
+  }
+  .modal {
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+  .modal-backdrop {
+    padding: 0;
+  }
+  .viewfinder {
+    width: min(100%, 220px);
+  }
+}
+
+/* ===== Responsive foundations (layout/format only; see RESPONSIVE_RULES.md) ===== */
+
+/* Mobile interaction foundation: keep controls easy to read and tap across every role. */
+@media (max-width: 639px) {
+  .input,
+  .select,
+  .textarea,
+  .app-select-trigger {
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  .app-select-trigger {
+    display: flex;
+    align-items: center;
+    line-height: 1.3;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .app-select-option {
+    min-height: 44px;
+  }
+
+  .btn.sm,
+  .filter-toggle,
+  .seg button {
+    min-height: 44px;
+  }
+
+  .page-head,
+  .card-head {
+    align-items: flex-start;
+  }
+
+  .page-head > *,
+  .card-head > * {
+    min-width: 0;
+  }
+}
+
+/* Laptop widths: the ticket table must fit its card, so the Actions column is never clipped. */
+@media (min-width: 1200px) and (max-width: 1919px) {
+  /* Give the Actions column the room its buttons need by taking it from the over-wide Status column. */
+  table[data-testid='ticket-table']:not(.tbl-mine) th:nth-child(5),
+  table[data-testid='ticket-table']:not(.tbl-mine) td:nth-child(5) {
+    width: 15%;
+  }
+  table[data-testid='ticket-table']:not(.tbl-mine) th:nth-child(8),
+  table[data-testid='ticket-table']:not(.tbl-mine) td:nth-child(8) {
+    width: 17%;
+  }
+  table[data-testid='ticket-table'].tbl-mine th:nth-child(5),
+  table[data-testid='ticket-table'].tbl-mine td:nth-child(5) {
+    width: 16%;
+  }
+  table[data-testid='ticket-table'].tbl-mine th:nth-child(8),
+  table[data-testid='ticket-table'].tbl-mine td:nth-child(8) {
+    width: 14%;
+  }
+  table[data-testid='ticket-table'] th,
+  table[data-testid='ticket-table'] td {
+    padding-inline: var(--s2);
+  }
+  /* Two-button Actions cells (e.g. View + Re-accept) need the room the 20px right padding was taking. */
+  table[data-testid='ticket-table'] td:nth-child(8) {
+    padding-right: var(--s2);
+  }
+  table[data-testid='ticket-table'] td:nth-child(8) .tbl-value {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s1) var(--s2);
+  }
+}
+
+/* Touch-size screens: controls reach the 44px minimum (inline text links and native checkboxes are exempt). */
+@media (pointer: coarse), (max-width: 1024px) {
+  .topbar .top-brand,
+  .btn.sm,
+  .date-filter-trigger {
+    min-height: var(--tap-min);
+  }
+}
+
+/* Keep the mobile drawer account row stable: the avatar, name and logout
+   control each retain their own space instead of colliding at narrow widths. */
+@media (max-width: 639px) {
+  .side-user {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    gap: var(--s2);
+    padding-inline: var(--s2);
+  }
+  .side-user .who {
+    overflow: hidden;
+  }
+  .side-user > [data-act='logout'] {
+    flex: 0 0 44px;
+    width: 44px;
+    min-width: 44px;
+    padding-inline: 0;
+  }
+}
+
+/* Ultrawide / 4K: use the extra width with more columns instead of stretching two huge cards. */
+@media (min-width: 2560px) {
+  .grid.cols-2 {
+    grid-template-columns: repeat(auto-fit, minmax(32rem, 1fr));
+  }
+  .grid.cols-2 > :last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+}
+
+/* Phones, chat open with the on-screen keyboard up: the panel ends at the top of the keyboard (so the message box stays visible),
+   and the bottom nav steps aside. --kb is set in js/utils/viewport.js. */
+@media (max-width: 479px) {
+  body.kb-open .bottom-nav { display: none; }
+  body.kb-open .chatbot-page { bottom: var(--kb, 0px); }
+  body.kb-open .chatbot-page .chat-note { display: none; }
+  body.kb-open .chatbot-page .chat-input { padding-bottom: var(--s3); }
+}

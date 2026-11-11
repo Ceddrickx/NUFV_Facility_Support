@@ -1,0 +1,303 @@
+/* Phone and chatbot rules. Loaded last so they keep winning the cascade; this text used to be injected from js/core/main.js at start-up and was moved here unchanged. */
+      @media (max-width: 479px) {
+        /* Tables become stacked cards on phones; keep the balanced grid for wider layouts only. */
+        .tbl-responsive {
+          table-layout: auto;
+        }
+        .table-wrap { max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
+        .notification-row, .notif, .feed li, .ticket-card { min-width: 0; overflow-wrap: anywhere; }
+        .settings-mobile-section .app-select-trigger { min-height: 48px; font-size: 1rem; }
+        .top-brand span { max-width: 128px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .bottom-nav a, .bottom-nav button { min-width: 0; }
+        .sticky-actions {
+          position: fixed;
+          left: 0;
+          right: 0;
+          bottom: var(--bottom-nav-h);
+          margin: 0;
+          padding: var(--s3) var(--s4);
+          z-index: calc(var(--z-sticky) + 1);
+        }
+        /* Keep wizard confirmation toasts above the fixed action bar and bottom nav. */
+        body:has(.sticky-actions:not([hidden])) .toasts {
+          bottom: calc(var(--bottom-nav-h) + 72px);
+        }
+        .main:has([data-wiz]) { padding-bottom: calc(var(--bottom-nav-h) + 16px); }
+      }
+
+      /* Give every shared table the same balanced column grid on tablets and desktops. */
+      @media (min-width: 640px) {
+        .tbl {
+          width: 100% !important;
+          table-layout: fixed !important;
+        }
+        .tbl th,
+        .tbl td {
+          width: auto !important;
+        }
+
+        /* Ticket history: let the content-heavy columns breathe while keeping
+           Date, Technician, and Actions compact and consistently aligned. */
+        table[data-testid='history-table'] th:nth-child(1),
+        table[data-testid='history-table'] td:nth-child(1) { width: 20% !important; }
+        table[data-testid='history-table'] th:nth-child(2),
+        table[data-testid='history-table'] td:nth-child(2) { width: 20% !important; }
+        table[data-testid='history-table'] th:nth-child(3),
+        table[data-testid='history-table'] td:nth-child(3) { width: 12% !important; }
+        table[data-testid='history-table'] th:nth-child(4),
+        table[data-testid='history-table'] td:nth-child(4) { width: 24% !important; }
+        table[data-testid='history-table'] th:nth-child(5),
+        table[data-testid='history-table'] td:nth-child(5) { width: 12% !important; }
+        table[data-testid='history-table'] th:nth-child(6),
+        table[data-testid='history-table'] td:nth-child(6) { width: 12% !important; }
+
+        /* Scheduled tickets: use the available width for the long Ticket and
+           Location values instead of leaving Date and Assigned To oversized. */
+        table[data-testid='maint-table'] th:nth-child(1),
+        table[data-testid='maint-table'] td:nth-child(1) { width: 24% !important; }
+        table[data-testid='maint-table'] th:nth-child(2),
+        table[data-testid='maint-table'] td:nth-child(2) { width: 22% !important; }
+        table[data-testid='maint-table'] th:nth-child(3),
+        table[data-testid='maint-table'] td:nth-child(3) { width: 12% !important; }
+        table[data-testid='maint-table'] th:nth-child(4),
+        table[data-testid='maint-table'] td:nth-child(4) { width: 18% !important; }
+        table[data-testid='maint-table'] th:nth-child(5),
+        table[data-testid='maint-table'] td:nth-child(5) { width: 12% !important; }
+        table[data-testid='maint-table'] th:nth-child(6),
+        table[data-testid='maint-table'] td:nth-child(6) { width: 12% !important; }
+
+        /* Technician dashboard rows contain five action controls; reserve their required room while keeping the data columns balanced. */
+        table[data-testid='assigned-table'] th:nth-child(1),
+        table[data-testid='assigned-table'] td:nth-child(1) { width: 24% !important; }
+        table[data-testid='assigned-table'] th:nth-child(2),
+        table[data-testid='assigned-table'] td:nth-child(2) { width: 18% !important; }
+        table[data-testid='assigned-table'] th:nth-child(3),
+        table[data-testid='assigned-table'] td:nth-child(3) { width: 10% !important; }
+        table[data-testid='assigned-table'] th:nth-child(4),
+        table[data-testid='assigned-table'] td:nth-child(4) {
+          width: 48% !important;
+        }
+        table[data-testid='assigned-table'] thead th:last-child {
+          padding-left: 12px !important;
+        }
+        table[data-testid='assigned-table'] td.actions {
+          overflow: hidden;
+        }
+
+        /* Users: balance widths by content while giving the long Department value room for two lines. */
+        table[data-testid='user-table'] th:nth-child(1),
+        table[data-testid='user-table'] td:nth-child(1) { width: 17% !important; }
+        table[data-testid='user-table'] th:nth-child(2),
+        table[data-testid='user-table'] td:nth-child(2) { width: 13% !important; }
+        table[data-testid='user-table'] th:nth-child(3),
+        table[data-testid='user-table'] td:nth-child(3) { width: 30% !important; }
+        table[data-testid='user-table'] th:nth-child(4),
+        table[data-testid='user-table'] td:nth-child(4) { width: 12% !important; }
+        table[data-testid='user-table'] th:nth-child(5),
+        table[data-testid='user-table'] td:nth-child(5) { width: 15% !important; }
+        table[data-testid='user-table'] th:nth-child(6),
+        table[data-testid='user-table'] td:nth-child(6) { width: 13% !important; }
+        table[data-testid='user-table'] td:nth-child(3) {
+          overflow-wrap: normal;
+          word-break: normal;
+        }
+
+        @media (min-width: 640px) and (max-width: 1599px) {
+          table[data-testid='user-table'] th:nth-child(1),
+          table[data-testid='user-table'] td:nth-child(1) { width: 16% !important; }
+          table[data-testid='user-table'] th:nth-child(2),
+          table[data-testid='user-table'] td:nth-child(2) { width: 12% !important; }
+          table[data-testid='user-table'] th:nth-child(3),
+          table[data-testid='user-table'] td:nth-child(3) { width: 32% !important; }
+          table[data-testid='user-table'] th:nth-child(4),
+          table[data-testid='user-table'] td:nth-child(4) { width: 12% !important; }
+          table[data-testid='user-table'] th:nth-child(5),
+          table[data-testid='user-table'] td:nth-child(5) { width: 15% !important; }
+          table[data-testid='user-table'] th:nth-child(6),
+          table[data-testid='user-table'] td:nth-child(6) { width: 13% !important; }
+        }
+
+        /* Location QR/Print actions create a tiny intrinsic edge overrun; keep the balanced grid visually flush with the card. */
+        .loc-tables .table-wrap {
+          overflow-x: hidden;
+        }
+      }
+
+      /* Student/Faculty mobile footer: GCash-inspired light bar with a raised QR action. */
+      @media (max-width: 639px) {
+        .bottom-nav[data-role='student'] {
+          min-height: 64px;
+          overflow: visible;
+          background: var(--surface);
+          color: var(--text-muted);
+          border-top: 1px solid var(--border);
+          box-shadow: 0 -4px 18px rgba(31, 38, 87, 0.12);
+        }
+        .bottom-nav[data-role='student'] a,
+        .bottom-nav[data-role='student'] button {
+          min-height: 64px;
+          padding: 7px 2px 6px;
+          gap: 3px;
+          color: var(--text-muted);
+          border-top: 0;
+          font-size: var(--fs-xs);
+          font-weight: var(--fw-medium);
+          border-radius: 12px 12px 0 0;
+          transition: background-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease), transform var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease);
+        }
+        .bottom-nav[data-role='student'] .icon {
+          width: 21px;
+          height: 21px;
+        }
+        .bottom-nav[data-role='student'] [aria-current='page'] {
+          background: rgba(53, 64, 142, 0.08);
+          color: var(--nu-navy);
+          border-top: 0;
+          box-shadow: inset 0 3px 0 var(--nu-gold);
+        }
+        .bottom-nav[data-role='student'] a:active,
+        .bottom-nav[data-role='student'] button:active {
+          background: rgba(53, 64, 142, 0.14);
+          color: var(--nu-navy);
+          transform: scale(0.96);
+        }
+        .bottom-nav[data-role='student'] a:focus-visible,
+        .bottom-nav[data-role='student'] button:focus-visible {
+          outline: 2px solid var(--nu-gold);
+          outline-offset: -4px;
+          background: rgba(53, 64, 142, 0.1);
+          color: var(--nu-navy);
+        }
+        .bottom-nav[data-role='student'] [data-bottom-key='qr'] {
+          position: relative;
+          overflow: visible;
+          color: var(--nu-navy);
+          justify-content: flex-end;
+          padding-bottom: 6px;
+        }
+        .bottom-nav[data-role='student'] [data-bottom-key='qr']::before {
+          content: '';
+          position: absolute;
+          top: -25px;
+          left: 50%;
+          width: 58px;
+          height: 58px;
+          transform: translateX(-50%);
+          border: 3px solid var(--nu-navy);
+          border-radius: 50%;
+          background: var(--surface);
+          box-shadow: 0 3px 12px rgba(31, 38, 87, 0.2);
+          transition: transform var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+        }
+        .bottom-nav[data-role='student'] [data-bottom-key='qr'] .icon,
+        .bottom-nav[data-role='student'] [data-bottom-key='qr'] span {
+          position: relative;
+          z-index: 1;
+        }
+        .bottom-nav[data-role='student'] [data-bottom-key='qr'] .icon {
+          position: absolute;
+          top: -10px;
+          left: 50%;
+          width: 28px;
+          height: 28px;
+          margin: 0;
+          transform: translateX(-50%);
+          pointer-events: none;
+        }
+        .bottom-nav[data-role='student'] [data-bottom-key='qr'] span {
+          margin-top: 0;
+        }
+      }
+      @media (max-width: 639px) and (hover: hover) and (pointer: fine) {
+        .bottom-nav[data-role='student'] a:hover,
+        .bottom-nav[data-role='student'] button:hover {
+          background: rgba(53, 64, 142, 0.1);
+          color: var(--nu-navy);
+        }
+        .bottom-nav[data-role='student'] [data-bottom-key='qr']:hover::before,
+        .bottom-nav[data-role='student'] [data-bottom-key='qr']:focus-visible::before {
+          border-color: var(--nu-blue);
+          transform: translateX(-50%) translateY(-2px);
+          box-shadow: 0 6px 16px rgba(31, 38, 87, 0.24);
+        }
+      }
+      @media (max-width: 639px) {
+        .bottom-nav[data-role='student'] [data-bottom-key='qr']:active::before {
+          transform: translateX(-50%) scale(0.94);
+          box-shadow: 0 2px 8px rgba(31, 38, 87, 0.18);
+        }
+      }
+      /* Report and Chatbot already reserve the space immediately above the footer. Keep QR contained there. */
+      @media (max-width: 639px) {
+        body:has(.sticky-actions) .bottom-nav[data-role='student'] [data-bottom-key='qr']::before,
+        body:has(.chatbot-page) .bottom-nav[data-role='student'] [data-bottom-key='qr']::before {
+          top: 2px;
+          width: 38px;
+          height: 38px;
+          border-width: 2px;
+          transform: translateX(-50%);
+          box-shadow: 0 2px 8px rgba(31, 38, 87, 0.16);
+        }
+        body:has(.sticky-actions) .bottom-nav[data-role='student'] [data-bottom-key='qr'] .icon,
+        body:has(.chatbot-page) .bottom-nav[data-role='student'] [data-bottom-key='qr'] .icon {
+          top: 11px;
+          width: 20px;
+          height: 20px;
+        }
+        body:has(.sticky-actions) .bottom-nav[data-role='student'] [data-bottom-key='qr']:hover::before,
+        body:has(.sticky-actions) .bottom-nav[data-role='student'] [data-bottom-key='qr']:focus-visible::before,
+        body:has(.chatbot-page) .bottom-nav[data-role='student'] [data-bottom-key='qr']:hover::before,
+        body:has(.chatbot-page) .bottom-nav[data-role='student'] [data-bottom-key='qr']:focus-visible::before {
+          transform: translateX(-50%) translateY(-1px);
+          box-shadow: 0 4px 10px rgba(31, 38, 87, 0.2);
+        }
+        body:has(.sticky-actions) .bottom-nav[data-role='student'] [data-bottom-key='qr']:active::before,
+        body:has(.chatbot-page) .bottom-nav[data-role='student'] [data-bottom-key='qr']:active::before {
+          transform: translateX(-50%) scale(0.94);
+        }
+      }
+      @media (max-width: 479px) and (max-height: 760px) {
+        .viewfinder { width: min(100%, 240px); }
+      }
+      .chat-head { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+      .chat-head h2 { display:flex; align-items:center; gap:8px; min-width:0; }
+      .chat-logo { width:30px; height:30px; object-fit:contain; flex:0 0 auto; }
+      .chat-head-actions { display:flex; align-items:center; gap:6px; flex:0 0 auto; }
+      .chat-head-actions .btn.ghost { color:#fff; border-color:rgba(255,255,255,.7); background:transparent; }
+      .chat-head-actions .btn.ghost:hover { background:rgba(255,255,255,.14); }
+      .chat-head-actions .future { white-space:nowrap; }
+      .chat-log { padding:14px; scroll-behavior:smooth; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; touch-action:pan-y; }
+      .chat-log .msg { max-width:88%; padding:9px 11px; border-radius:14px; margin:8px 0; line-height:1.45; display:flex; gap:9px; align-items:flex-start; }
+      .msg-avatar { flex:0 0 auto; padding-top:1px; }
+      .chat-avatar { width:30px; height:30px; border-radius:50%; object-fit:cover; }
+      .chat-ai-avatar { object-fit:contain; background:#fff; padding:2px; }
+      .msg-body { min-width:0; flex:1; }
+      .chat-log .msg.bot { margin-right:auto; background:var(--surface-alt); border:1px solid var(--border); }
+      .chat-log .msg.user { margin-left:auto; background:var(--nu-blue); color:#fff; }
+      .chat-log .msg.alert { border-left:4px solid var(--warning); background:rgba(233,162,59,.12); color:var(--text); }
+      .chat-log .msg time { display:block; opacity:.65; font-size:var(--fs-xs); margin-top:6px; }
+      .chat-log .opts { display:flex; flex-wrap:wrap; gap:7px; margin-top:10px; }
+      .chat-log .opts .btn { min-height:40px; }
+      .chat-note { min-height:36px; padding:8px 14px; font-size:var(--fs-xs); color:var(--text-muted); border-top:1px solid var(--border); display:flex; align-items:center; justify-content:center; gap:8px; text-align:center; }
+      .chat-note-copy { display:block; }
+      .chat-note-toggle, .chat-note-dismiss { color:var(--text-muted); }
+      .chat-note-toggle { display:none; align-items:center; gap:6px; border:0; background:transparent; padding:3px 0; font:inherit; cursor:pointer; }
+      .chat-note-toggle .icon, .chat-note-dismiss .icon { width:15px; height:15px; }
+      .chat-note-dismiss { display:none; flex:0 0 auto; min-width:30px; min-height:30px; padding:4px; }
+      @media (max-width:479px) {
+        body:has(.chatbot-page) { overflow:hidden; }
+        .chatbot-page { position:fixed; top:var(--topbar-h); right:0; bottom:var(--bottom-nav-h); left:0; height:auto; width:auto; display:flex; flex-direction:column; margin:0; overflow:hidden; overscroll-behavior:none; z-index:var(--z-sticky); }
+        .chatbot-page > .page-head { display:none; }
+        .main:has(.chatbot-page) { overflow:hidden; }
+        .chatbot-page .chat-inline { flex:1; min-height:0; height:100%; border-radius:0; border:0; overflow:hidden; }
+        .chat-head-actions .future { display:none; }
+        .chat-note { justify-content:space-between; text-align:left; padding:6px 10px; gap:8px; }
+        .chat-note-toggle { display:inline-flex; flex:0 0 auto; white-space:nowrap; }
+        .chat-note-copy { display:none; flex:1 1 auto; line-height:1.35; }
+        .chat-note.expanded .chat-note-copy { display:block; }
+        .chat-note.expanded .chat-note-toggle span { display:none; }
+        .chat-note-dismiss { display:inline-grid; place-items:center; }
+        .chat-log .msg { max-width:94%; }
+        .chat-log .opts { display:grid; grid-template-columns:1fr; }
+        .chat-log .opts .btn { width:100%; min-height:44px; justify-content:center; }
+      }
